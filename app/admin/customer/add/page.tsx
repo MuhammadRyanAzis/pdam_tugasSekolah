@@ -19,7 +19,7 @@ async function getAllServices(): Promise<Service[]> {
       cache: "no-store",
       headers: {
         "Content-Type": "application/json",
-        "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+        "app-key": process.env.APP_KEY || "",
         "authorization": `Bearer ${await getCookies("token")}`,
       },
     })

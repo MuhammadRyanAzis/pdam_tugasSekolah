@@ -6,7 +6,14 @@ import { getCookies } from "@/helper/cookies"
 import Link from "next/link"
 import { ArrowLeft, CreditCard, UploadCloud, FileImage, Loader2, CheckCircle2 } from "lucide-react"
 
-export default function PaymentForm({ pendingBills }: { pendingBills: any[] }) {
+export interface PendingBill {
+  id: number | string
+  month: number
+  year: number
+  amount: number
+}
+
+export default function PaymentForm({ pendingBills }: { pendingBills: PendingBill[] }) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [billId, setBillId] = useState<string>("")
@@ -21,8 +28,8 @@ export default function PaymentForm({ pendingBills }: { pendingBills: any[] }) {
     if (id) setBillId(id)
   }, [searchParams])
 
-  const MONTHS = ["", "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"]
+  const MONTHS = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -33,11 +40,11 @@ export default function PaymentForm({ pendingBills }: { pendingBills: any[] }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!billId) {
-      setError("Please select a bill to pay.")
+      setError("Silakan pilih tagihan yang ingin dibayar.")
       return
     }
     if (!file) {
-      setError("Please upload a payment proof image.")
+      setError("Silakan unggah gambar bukti pembayaran.")
       return
     }
 
@@ -49,12 +56,9 @@ export default function PaymentForm({ pendingBills }: { pendingBills: any[] }) {
       formData.append("bill_id", billId)
       formData.append("file", file)
 
-      const token = await getCookies("token")
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/payments`, {
+      const response = await fetch(`/api-proxy/payments`, {
         method: "POST",
         headers: {
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
-          "Authorization": `Bearer ${token}`,
           // Note: browser sets Content-Type automatically for FormData including boundary
         },
         body: formData,
@@ -62,7 +66,7 @@ export default function PaymentForm({ pendingBills }: { pendingBills: any[] }) {
 
       const result = await response.json()
       if (!response.ok) {
-        throw new Error(result.message || "Failed to submit payment")
+        throw new Error(result.message || "Gagal mengirim pembayaran")
       }
 
       setSuccess(true)
@@ -71,144 +75,108 @@ export default function PaymentForm({ pendingBills }: { pendingBills: any[] }) {
         router.refresh()
       }, 2000)
 
-    } catch (err: any) {
-      setError(err.message || "Something went wrong. Please try again.")
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || "Terjadi kesalahan. Silakan coba lagi.")
+      } else {
+        setError("Terjadi kesalahan yang tidak terduga.")
+      }
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div>
-      <div style={{ marginBottom: "32px", display: "flex", alignItems: "center", gap: "16px" }}>
-        <Link href="/customer/payments" style={{
-          display: "flex", alignItems: "center", justifyContent: "center",
-          width: "40px", height: "40px", borderRadius: "10px",
-          background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-          color: "rgba(255,255,255,0.6)", transition: "all 0.2s"
-        }}>
+    <div className="w-full">
+      <div className="mb-6 md:mb-8 flex flex-row items-center gap-4">
+        <Link 
+          href="/customer/payments" 
+          className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-all shrink-0"
+        >
           <ArrowLeft size={18} />
         </Link>
         <div>
-          <h1 style={{ fontSize: "28px", fontWeight: 900, color: "#ffffff", margin: 0, letterSpacing: "-0.01em" }}>Submit Payment</h1>
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", margin: "4px 0 0" }}>Upload your payment receipt securely.</p>
+          <h1 className="text-xl md:text-[28px] font-black text-white m-0 tracking-[-0.01em]">Kirim Pembayaran</h1>
+          <p className="text-xs md:text-sm text-white/40 mt-1 mb-0">Unggah struk pembayaran Anda secara aman.</p>
         </div>
       </div>
 
       {success ? (
-        <div style={{
-          borderRadius: "20px", padding: "40px", textAlign: "center",
-          background: "rgba(74,222,128,0.05)", border: "1px solid rgba(74,222,128,0.2)"
-        }}>
-          <div style={{
-            width: "60px", height: "60px", borderRadius: "50%", background: "rgba(74,222,128,0.1)", border: "1px solid rgba(74,222,128,0.25)",
-            display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px"
-          }}>
-            <CheckCircle2 size={30} style={{ color: "#4ade80" }} />
+        <div className="rounded-[20px] p-6 md:p-10 text-center bg-[#4ade80]/5 border border-[#4ade80]/20">
+          <div className="w-[60px] h-[60px] rounded-full bg-[#4ade80]/10 border border-[#4ade80]/25 flex items-center justify-center mx-auto mb-5">
+            <CheckCircle2 size={30} className="text-[#4ade80]" />
           </div>
-          <h2 style={{ fontSize: "20px", fontWeight: 800, color: "#4ade80", margin: "0 0 10px" }}>Payment Submitted</h2>
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)", margin: "0 0 0" }}>Your payment proof has been uploaded and is waiting for verification. Redirecting...</p>
+          <h2 className="text-lg md:text-xl font-extrabold text-[#4ade80] m-0 mb-2.5">Pembayaran Terkirim</h2>
+          <p className="text-xs md:text-sm text-white/50 m-0">Bukti pembayaran Anda telah diunggah dan sedang menunggu verifikasi. Mengalihkan...</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} style={{
-          borderRadius: "24px", padding: "32px",
-          background: "rgba(255,255,255,0.025)",
-          border: "1px solid rgba(168,85,247,0.18)",
-          position: "relative"
-        }}>
-          <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, #a855f7, #38bdf8, transparent)" }} />
+        <form onSubmit={handleSubmit} className="rounded-2xl md:rounded-[24px] p-5 md:p-8 bg-white/5 border border-[#a855f7]/20 relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#a855f7] via-[#38bdf8] to-transparent" />
 
           {error && (
-            <div style={{
-              padding: "16px", borderRadius: "12px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)",
-              color: "#fca5a5", fontSize: "13px", fontWeight: 600, marginBottom: "24px",
-              display: "flex", alignItems: "center", gap: "10px"
-            }}>
-              <div style={{ width: "4px", height: "16px", background: "#ef4444", borderRadius: "2px" }} />
+            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300 text-xs md:text-sm font-semibold mb-6 flex items-center gap-2.5">
+              <div className="w-1 h-4 bg-red-500 rounded-sm shrink-0" />
               {error}
             </div>
           )}
 
-          <div style={{ marginBottom: "24px" }}>
-            <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.7)", marginBottom: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              <CreditCard size={14} style={{ color: "#a855f7" }} />
-              Select Bill to Pay
+          <div className="mb-6">
+            <label className="flex items-center gap-2 text-xs font-bold text-white/70 mb-2.5 uppercase tracking-wider">
+              <CreditCard size={14} className="text-[#a855f7]" />
+              Pilih Tagihan untuk Dibayar
             </label>
-            <div style={{ position: "relative" }}>
+            <div className="relative">
               <select
                 value={billId}
                 onChange={(e) => setBillId(e.target.value)}
-                style={{
-                  width: "100%", padding: "16px", borderRadius: "14px",
-                  background: "rgba(10,15,30,0.5)", border: "1px solid rgba(255,255,255,0.1)",
-                  color: billId ? "#ffffff" : "rgba(255,255,255,0.3)", fontSize: "14px",
-                  appearance: "none", cursor: "pointer", outline: "none", transition: "all 0.2s"
-                }}
+                className={`w-full p-3 md:p-4 rounded-xl bg-[#0a0f1e]/50 border border-white/10 text-xs md:text-sm appearance-none cursor-pointer outline-none transition-all ${billId ? 'text-white' : 'text-white/30'}`}
               >
-                <option value="" disabled>-- Select a pending bill --</option>
+                <option value="" disabled>-- Pilih tagihan yang belum dibayar --</option>
                 {pendingBills.length === 0 && (
-                  <option disabled>No pending bills found.</option>
+                  <option disabled>Tidak ada tagihan tertunda.</option>
                 )}
                 {pendingBills.map(bill => (
-                  <option key={bill.id} value={bill.id} style={{ color: "#000" }}>
+                  <option key={bill.id} value={bill.id} className="text-black">
                     {MONTHS[bill.month]} {bill.year} - Rp {bill.amount.toLocaleString("id-ID")}
                   </option>
                 ))}
               </select>
-              <div style={{ position: "absolute", right: "16px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6" /></svg>
               </div>
             </div>
           </div>
 
-          <div style={{ marginBottom: "32px" }}>
-            <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.7)", marginBottom: "10px", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-              <FileImage size={14} style={{ color: "#38bdf8" }} />
-              Upload Payment Proof
+          <div className="mb-6 md:mb-8">
+            <label className="flex items-center gap-2 text-xs font-bold text-white/70 mb-2.5 uppercase tracking-wider">
+              <FileImage size={14} className="text-[#38bdf8]" />
+              Unggah Bukti Pembayaran
             </label>
-            <label style={{
-              display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-              width: "100%", height: "180px", borderRadius: "16px",
-              background: "rgba(10,15,30,0.5)", border: "2px dashed rgba(255,255,255,0.1)",
-              cursor: "pointer", transition: "all 0.2s",
-              ...(file ? { borderColor: "rgba(56,189,248,0.4)", background: "rgba(56,189,248,0.03)" } : {})
-            }}>
-              <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: "none" }} />
-              <div style={{
-                width: "48px", height: "48px", borderRadius: "14px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)",
-                display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "16px"
-              }}>
-                <UploadCloud size={24} style={{ color: file ? "#38bdf8" : "rgba(255,255,255,0.4)" }} />
+            <label className={`flex flex-col items-center justify-center w-full h-[160px] md:h-[180px] rounded-xl bg-[#0a0f1e]/50 border-2 border-dashed border-white/10 cursor-pointer transition-all ${file ? 'border-[#38bdf8]/40 bg-[#38bdf8]/5' : 'hover:border-white/20'}`}>
+              <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center mb-3 md:mb-4">
+                <UploadCloud size={20} className={file ? "text-[#38bdf8]" : "text-white/40"} />
               </div>
-              <span style={{ fontSize: "14px", fontWeight: 600, color: file ? "#38bdf8" : "rgba(255,255,255,0.6)", marginBottom: "6px" }}>
-                {file ? file.name : "Click to attach image file"}
+              <span className={`text-xs md:text-sm font-semibold mb-1.5 text-center px-4 ${file ? 'text-[#38bdf8]' : 'text-white/60'}`}>
+                {file ? file.name : "Klik untuk melampirkan file gambar"}
               </span>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)" }}>PNG, JPG, JPEG up to 5MB</span>
+              <span className="text-[10px] md:text-xs text-white/30">PNG, JPG, JPEG maksimal 5MB</span>
             </label>
           </div>
 
           <button
             type="submit"
             disabled={loading || !billId || !file}
-            style={{
-              width: "100%", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px",
-              padding: "16px", borderRadius: "14px",
-              background: loading || !billId || !file ? "rgba(255,255,255,0.05)" : "linear-gradient(to right, #a855f7, #38bdf8)",
-              color: loading || !billId || !file ? "rgba(255,255,255,0.3)" : "#ffffff",
-              fontSize: "15px", fontWeight: 700, border: "none", cursor: loading || !billId || !file ? "not-allowed" : "pointer",
-              transition: "all 0.2s",
-              boxShadow: loading || !billId || !file ? "none" : "0 8px 24px rgba(168,85,247,0.3)",
-            }}
+            className={`w-full flex items-center justify-center gap-2.5 p-3.5 md:p-4 rounded-xl text-sm md:text-[15px] font-bold border-none transition-all ${loading || !billId || !file ? 'bg-white/5 text-white/30 cursor-not-allowed shadow-none' : 'bg-gradient-to-r from-[#a855f7] to-[#38bdf8] text-white cursor-pointer shadow-[0_8px_24px_rgba(168,85,247,0.3)] hover:opacity-90 hover:scale-[1.01]'}`}
           >
             {loading ? (
               <>
-                <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />
-                Submitting...
+                <Loader2 size={18} className="animate-spin" />
+                Mengirim...
               </>
             ) : (
-              "Submit Payment"
+              "Kirim Pembayaran"
             )}
-            <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
           </button>
         </form>
       )}

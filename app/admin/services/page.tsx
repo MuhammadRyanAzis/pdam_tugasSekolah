@@ -27,7 +27,7 @@ async function getServices(): Promise<ServiceResponse> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/services`, {
       method: "GET",
       headers: {
-        "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+        "app-key": process.env.APP_KEY || "",
         "Authorization": `Bearer ${await getCookies("token")}`,
       },
       next: { revalidate: 0 },
@@ -36,7 +36,7 @@ async function getServices(): Promise<ServiceResponse> {
     if (!response.ok) return { success: false, message: data.message, data: [], count: 0 }
     return data
   } catch {
-    return { success: false, message: "Failed to fetch service", data: [], count: 0 }
+    return { success: false, message: "Gagal mengambil layanan", data: [], count: 0 }
   }
 }
 
@@ -48,40 +48,15 @@ export default async function ServicePage(props: PageProps) {
 
   if (!success) {
     return (
-      <div style={{
-        minHeight: "100vh", backgroundColor: "#0a0f1e",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "24px", color: "#fff",
-      }}>
-        <div style={{
-          borderRadius: "20px", padding: "40px",
-          background: "rgba(239,68,68,0.06)",
-          border: "1px solid rgba(239,68,68,0.2)",
-          maxWidth: "400px", width: "100%", textAlign: "center",
-        }}>
-          <div style={{
-            width: "56px", height: "56px", borderRadius: "50%",
-            background: "rgba(239,68,68,0.1)",
-            border: "1px solid rgba(239,68,68,0.25)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            margin: "0 auto 16px",
-          }}>
-            <Info size={24} style={{ color: "#ef4444" }} />
+      <div className="min-h-screen bg-[#0a0f1e] flex items-center justify-center p-6 text-white">
+        <div className="rounded-2xl p-10 bg-[#ef4444]/[0.06] border border-[#ef4444]/20 max-w-[400px] w-full text-center">
+          <div className="w-14 h-14 rounded-full bg-[#ef4444]/10 border border-[#ef4444]/25 flex items-center justify-center mx-auto mb-4">
+            <Info size={24} className="text-[#ef4444]" />
           </div>
-          <h1 style={{ fontSize: "22px", fontWeight: 900, color: "#ef4444", margin: "0 0 8px" }}>
-            Fetch Error
-          </h1>
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", margin: "0 0 24px" }}>
-            {message}
-          </p>
-          <Link href="/admin/profile" style={{
-            display: "inline-block", padding: "10px 24px",
-            borderRadius: "10px", background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "rgba(255,255,255,0.8)", fontSize: "13px",
-            fontWeight: 600, textDecoration: "none",
-          }}>
-            Back to Dashboard
+          <h1 className="text-[22px] font-black text-[#ef4444] m-0 mb-2">Terjadi Kesalahan</h1>
+          <p className="text-sm text-white/40 m-0 mb-6">{message}</p>
+          <Link href="/admin/profile" className="inline-block px-6 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-white/80 text-[13px] font-semibold no-underline">
+            Kembali ke Dasbor
           </Link>
         </div>
       </div>
@@ -94,105 +69,58 @@ export default async function ServicePage(props: PageProps) {
   const displayCount = filteredData.length
 
   return (
-    <div style={{
-      minHeight: "100vh", backgroundColor: "#0a0f1e",
-      color: "#ffffff", position: "relative", overflow: "hidden",
-    }}>
+    <div className="min-h-screen bg-[#0a0f1e] text-white relative overflow-hidden">
       {/* Orbs */}
-      <div style={{
-        position: "absolute", width: "500px", height: "500px", borderRadius: "50%",
-        top: "-120px", right: "-120px",
-        background: "rgba(56,189,248,0.09)", filter: "blur(110px)", pointerEvents: "none",
-      }} />
-      <div style={{
-        position: "absolute", width: "450px", height: "450px", borderRadius: "50%",
-        bottom: "-100px", left: "-100px",
-        background: "rgba(74,222,128,0.07)", filter: "blur(100px)", pointerEvents: "none",
-      }} />
+      <div className="absolute w-[500px] h-[500px] rounded-full top-[-120px] right-[-120px] bg-[#38bdf8]/[0.09] blur-[110px] pointer-events-none" />
+      <div className="absolute w-[450px] h-[450px] rounded-full bottom-[-100px] left-[-100px] bg-[#4ade80]/[0.07] blur-[100px] pointer-events-none" />
       {/* Grid */}
-      <div style={{
-        position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.03,
-        backgroundImage: `linear-gradient(#00e5ff 1px,transparent 1px),linear-gradient(90deg,#00e5ff 1px,transparent 1px)`,
-        backgroundSize: "60px 60px",
-      }} />
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(#00e5ff 1px,transparent 1px),linear-gradient(90deg,#00e5ff 1px,transparent 1px)`,
+          backgroundSize: "60px 60px"
+        }} 
+      />
 
-      <div style={{
-        position: "relative", zIndex: 10,
-        padding: "40px 48px", maxWidth: "1280px", margin: "0 auto",
-      }}>
+      <div className="relative z-10 py-10 px-6 sm:px-12 max-w-[1280px] mx-auto">
 
         {/* ── Header ── */}
-        <div style={{
-          display: "flex", justifyContent: "space-between",
-          alignItems: "center", marginBottom: "40px", flexWrap: "wrap", gap: "16px",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <div style={{
-              width: "50px", height: "50px", borderRadius: "14px",
-              background: "rgba(56,189,248,0.1)",
-              border: "1px solid rgba(56,189,248,0.25)",
-              boxShadow: "0 0 20px rgba(56,189,248,0.15)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <Zap size={22} style={{ color: "#38bdf8" }} />
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-[50px] h-[50px] rounded-2xl bg-[#38bdf8]/10 border border-[#38bdf8]/25 shadow-[0_0_20px_rgba(56,189,248,0.15)] flex items-center justify-center shrink-0">
+              <Zap size={22} className="text-[#38bdf8]" />
             </div>
             <div>
-              <h1 style={{
-                fontSize: "clamp(24px,4vw,36px)", fontWeight: 900,
-                color: "#38bdf8", margin: 0, letterSpacing: "-0.02em",
-                textShadow: "0 0 24px rgba(56,189,248,0.3)",
-              }}>
-                Service Management
+              <h1 className="text-[clamp(24px,4vw,36px)] font-black text-[#38bdf8] m-0 tracking-[-0.02em] drop-shadow-[0_0_24px_rgba(56,189,248,0.3)]">
+                Manajemen Layanan
               </h1>
-              <p style={{
-                fontSize: "13px", color: "rgba(255,255,255,0.4)",
-                margin: "4px 0 0", display: "flex", alignItems: "center", gap: "6px",
-              }}>
-                <Package size={13} style={{ color: "#4ade80" }} />
-                {displayCount} active services currently available
+              <p className="text-[13px] text-white/40 mt-1 flex items-center gap-1.5 m-0">
+                <Package size={13} className="text-[#4ade80]" />
+                {displayCount} layanan aktif saat ini tersedia
               </p>
             </div>
           </div>
 
-          <Link href="/admin/services/add" style={{ textDecoration: "none" }}>
-            <button style={{
-              display: "flex", alignItems: "center", gap: "8px",
-              padding: "12px 24px", borderRadius: "12px",
-              background: "#38bdf8", color: "#0a0f1e",
-              fontSize: "14px", fontWeight: 700, border: "none", cursor: "pointer",
-              boxShadow: "0 0 20px rgba(56,189,248,0.4)", transition: "all 0.2s",
-            }}>
+          <Link href="/admin/services/add" className="no-underline w-full sm:w-auto">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#38bdf8] text-[#0a0f1e] text-sm font-bold border-none cursor-pointer shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-200 hover:scale-105">
               <Plus size={16} />
-              Add New Service
+              Tambah Layanan Baru
             </button>
           </Link>
 
         </div>
 
         {/* ── Main Card ── */}
-        <div style={{
-          borderRadius: "24px", padding: "32px",
-          background: "rgba(255,255,255,0.025)",
-          border: "1px solid rgba(74,222,128,0.18)",
-          marginBottom: "24px", position: "relative", overflow: "hidden",
-        }}>
+        <div className="rounded-3xl p-6 sm:p-8 bg-white/[0.025] border border-[#4ade80]/[0.18] mb-6 relative overflow-hidden">
           {/* Top accent */}
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-            background: "linear-gradient(90deg, #38bdf8, #4ade80, transparent)",
-          }} />
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#38bdf8] to-[#4ade80] opacity-50" />
 
           {/* Search */}
-          <div style={{ marginBottom: "32px" }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px",
-            }}>
-              <Filter size={16} style={{ color: "#4ade80" }} />
-              <h2 style={{
-                fontSize: "13px", fontWeight: 700, color: "#4ade80",
-                textTransform: "uppercase", letterSpacing: "0.1em", margin: 0,
-              }}>
-                Filter Services
+          <div className="mb-8">
+            <div className="flex items-center gap-2.5 mb-3">
+              <Filter size={16} className="text-[#4ade80]" />
+              <h2 className="text-[13px] font-bold text-[#4ade80] uppercase tracking-[0.1em] m-0">
+                Filter Layanan
               </h2>
             </div>
             <Search search={search} />
@@ -200,138 +128,75 @@ export default async function ServicePage(props: PageProps) {
 
           {/* Empty state */}
           {displayCount === 0 ? (
-            <div style={{
-              padding: "64px 24px", textAlign: "center",
-              borderRadius: "16px",
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.05)",
-            }}>
-              <div style={{
-                width: "64px", height: "64px", borderRadius: "50%",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                margin: "0 auto 16px",
-              }}>
-                <SearchIcon size={28} style={{ color: "rgba(255,255,255,0.2)" }} />
+            <div className="py-16 px-6 text-center rounded-2xl bg-white/[0.02] border border-white/5">
+              <div className="w-16 h-16 rounded-full bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mx-auto mb-4">
+                <SearchIcon size={28} className="text-white/20" />
               </div>
-              <h3 style={{
-                fontSize: "20px", fontWeight: 700,
-                color: "rgba(255,255,255,0.6)", margin: "0 0 8px",
-              }}>
-                No Services Found
+              <h3 className="text-xl font-bold text-white/60 m-0 mb-2">
+                Tidak Ada Layanan Ditemukan
               </h3>
-              <p style={{
-                fontSize: "14px", color: "rgba(255,255,255,0.3)",
-                maxWidth: "380px", margin: "0 auto", lineHeight: 1.7,
-              }}>
+              <p className="text-sm text-white/30 max-w-[380px] mx-auto leading-[1.7]">
                 {search?.trim()
-                  ? `No service matches "${search}". Try a different keyword.`
-                  : "No services yet. Click 'Add New Service' to get started."}
+                  ? `Tidak ada layanan yang cocok dengan "${search}". Coba kata kunci lain.`
+                  : "Belum ada layanan. Klik 'Tambah Layanan Baru' untuk memulai."}
               </p>
             </div>
           ) : (
             /* ── Service Cards Grid ── */
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-              gap: "20px",
-            }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {filteredData.map(service => (
                 <div
                   key={service.id}
-                  style={{
-                    borderRadius: "20px", padding: "24px",
-                    background: "rgba(255,255,255,0.025)",
-                    border: "1px solid rgba(56,189,248,0.18)",
-                    position: "relative", overflow: "hidden",
-                    transition: "all 0.3s ease",
-                  }}
-                  className="hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_28px_rgba(56,189,248,0.1)] transition-all duration-300"
+                  className="rounded-[20px] p-6 bg-white/[0.025] border border-[#38bdf8]/[0.18] relative overflow-hidden transition-all duration-300 hover:border-[#38bdf8]/40 hover:-translate-y-1 hover:shadow-[0_0_28px_rgba(56,189,248,0.1)] group"
                 >
                   {/* Card top accent */}
-                  <div style={{
-                    position: "absolute", top: 0, left: "20px", right: "20px", height: "1px",
-                    background: "linear-gradient(90deg, #38bdf850, transparent)",
-                  }} />
+                  <div className="absolute top-0 left-5 right-5 h-[1px] bg-gradient-to-r from-[#38bdf8]/30 to-transparent" />
 
                   {/* Card header */}
-                  <div style={{
-                    display: "flex", justifyContent: "space-between",
-                    alignItems: "flex-start", marginBottom: "20px",
-                  }}>
-                    <div style={{
-                      width: "42px", height: "42px", borderRadius: "12px",
-                      background: "rgba(56,189,248,0.08)",
-                      border: "1px solid rgba(56,189,248,0.2)",
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                    }}>
-                      <Settings size={18} style={{ color: "#38bdf8" }} />
+                  <div className="flex justify-between items-start mb-5">
+                    <div className="w-[42px] h-[42px] rounded-xl bg-[#38bdf8]/[0.08] border border-[#38bdf8]/20 flex items-center justify-center">
+                      <Settings size={18} className="text-[#38bdf8]" />
                     </div>
-                    <div style={{
-                      padding: "3px 10px", borderRadius: "999px",
-                      background: "rgba(74,222,128,0.08)",
-                      border: "1px solid rgba(74,222,128,0.25)",
-                      fontSize: "10px", fontWeight: 700,
-                      color: "#4ade80", textTransform: "uppercase", letterSpacing: "0.1em",
-                    }}>
-                      Active
+                    <div className="px-2.5 py-1 rounded-full bg-[#4ade80]/[0.08] border border-[#4ade80]/30 text-[10px] font-bold text-[#4ade80] uppercase tracking-[0.1em]">
+                      Aktif
                     </div>
                   </div>
 
-                  <h3 style={{
-                    fontSize: "16px", fontWeight: 700,
-                    color: "#ffffff", margin: "0 0 16px",
-                  }}>
+                  <h3 className="text-base font-bold text-white m-0 mb-4 group-hover:text-[#38bdf8] transition-colors">
                     {service.name}
                   </h3>
 
                   {/* Stats */}
-                  <div style={{ marginBottom: "20px" }}>
+                  <div className="mb-5">
                     {[
-                      { label: "Min Usage", value: `${service.min_usage} m³` },
-                      { label: "Max Usage", value: `${service.max_usage} m³` },
+                      { label: "Penggunaan Min", value: `${service.min_usage} m³` },
+                      { label: "Penggunaan Maks", value: `${service.max_usage} m³` },
                     ].map(item => (
-                      <div key={item.label} style={{
-                        display: "flex", justifyContent: "space-between",
-                        alignItems: "center", padding: "8px 0",
-                        borderBottom: "1px solid rgba(255,255,255,0.05)",
-                        fontSize: "13px",
-                      }}>
-                        <span style={{ color: "rgba(255,255,255,0.35)" }}>{item.label}</span>
-                        <span style={{ color: "rgba(255,255,255,0.8)", fontWeight: 600 }}>{item.value}</span>
+                      <div key={item.label} className="flex justify-between items-center py-2 border-b border-white/5 text-[13px]">
+                        <span className="text-white/40">{item.label}</span>
+                        <span className="text-white/80 font-semibold">{item.value}</span>
                       </div>
                     ))}
-                    <div style={{
-                      display: "flex", justifyContent: "space-between",
-                      alignItems: "center", paddingTop: "12px",
-                    }}>
-                      <span style={{
-                        fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.3)",
-                        textTransform: "uppercase", letterSpacing: "0.1em",
-                      }}>
-                        Base Price
+                    <div className="flex justify-between items-center pt-3">
+                      <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.1em]">
+                        Harga Dasar
                       </span>
-                      <span style={{
-                        fontSize: "18px", fontWeight: 900,
-                        color: "#4ade80",
-                        textShadow: "0 0 12px rgba(74,222,128,0.4)",
-                      }}>
-                        Rp {service.price.toLocaleString()}
+                      <span className="text-lg font-black text-[#4ade80] drop-shadow-[0_0_12px_rgba(74,222,128,0.4)]">
+                        Rp {service.price.toLocaleString("id-ID")}
                       </span>
                     </div>
                   </div>
 
                   {/* Actions */}
-                  <div style={{ display: "flex", gap: "10px" }}>
+                  <div className="flex gap-2.5">
                     <Link
                       href={`/admin/services/edit/${service.id}`}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all duration-300"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-[13px] font-bold rounded-lg bg-[#38bdf8]/[0.07] hover:bg-[#38bdf8]/[0.15] text-[#38bdf8] border border-[#38bdf8]/20 transition-all duration-300 no-underline"
                     >
-                      <svg className="h-4 w-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                       </svg>
-                      Edit
+                      Ubah
                     </Link>
                     <DropServiceButton selectedData={service.id} />
                   </div>
@@ -342,39 +207,18 @@ export default async function ServicePage(props: PageProps) {
         </div>
 
         {/* ── Footer Stats ── */}
-        <div style={{
-          borderRadius: "16px", padding: "16px 24px",
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          display: "flex", justifyContent: "space-between",
-          alignItems: "center", flexWrap: "wrap", gap: "12px",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{
-              width: "36px", height: "36px", borderRadius: "10px",
-              background: "rgba(56,189,248,0.08)",
-              border: "1px solid rgba(56,189,248,0.2)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-            }}>
-              <Info size={16} style={{ color: "#38bdf8" }} />
+        <div className="rounded-2xl p-4 sm:px-6 bg-white/[0.02] border border-white/[0.07] flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-[#38bdf8]/[0.08] border border-[#38bdf8]/20 flex items-center justify-center shrink-0">
+              <Info size={16} className="text-[#38bdf8]" />
             </div>
-            <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)" }}>
-              Displaying{" "}
-              <span style={{ color: "#ffffff", fontWeight: 700 }}>{displayCount}</span>
-              {" "}of{" "}
-              <span style={{ color: "#ffffff", fontWeight: 700 }}>{count}</span>
-              {" "}services
+            <span className="text-sm text-white/50">
+              Menampilkan <span className="text-white font-bold">{displayCount}</span> dari <span className="text-white font-bold">{count}</span> layanan
             </span>
           </div>
           {search?.trim() && (
-            <div style={{
-              padding: "6px 14px", borderRadius: "10px",
-              background: "rgba(56,189,248,0.06)",
-              border: "1px solid rgba(56,189,248,0.18)",
-              fontSize: "12px", color: "rgba(255,255,255,0.4)",
-            }}>
-              Filtering by:{" "}
-              <span style={{ color: "#38bdf8", fontWeight: 700 }}>"{search}"</span>
+            <div className="px-3.5 py-1.5 rounded-lg bg-[#38bdf8]/[0.06] border border-[#38bdf8]/[0.18] text-xs text-white/40">
+              Memfilter: <span className="text-[#38bdf8] font-bold">"{search}"</span>
             </div>
           )}
         </div>

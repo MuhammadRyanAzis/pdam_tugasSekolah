@@ -30,11 +30,10 @@ export default function AddPage() {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/services`, {
+      const response = await fetch(`/api-proxy/services`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
           "authorization": `Bearer ${await getCookies("token")}`,
         },
         body: JSON.stringify({

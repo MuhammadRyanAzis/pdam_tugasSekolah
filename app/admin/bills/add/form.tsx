@@ -60,12 +60,10 @@ export default function AddBillForm({ customers, services }: { customers: Custom
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bills`, {
+      const response = await fetch(`/api-proxy/bills`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
-          "Authorization": `Bearer ${await getCookies("token")}`,
         },
         body: JSON.stringify({
           customer_id:        Number(customerId),
@@ -196,7 +194,7 @@ export default function AddBillForm({ customers, services }: { customers: Custom
                   style={{ flex: 1, padding: "13px", borderRadius: "12px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", fontSize: "14px", fontWeight: 600, cursor: "pointer", transition: "all 0.2s" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.08)"; (e.currentTarget as HTMLButtonElement).style.color = "#fff" }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)" }}
-                >Cancel</button>
+                >Batal</button>
               </div>
             </form>
           </div>

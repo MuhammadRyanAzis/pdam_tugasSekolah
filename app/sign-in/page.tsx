@@ -27,18 +27,27 @@ export default function SignInPage() {
   async function handleSignIn(event: FormEvent) {
     try {
       event.preventDefault();
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/auth`;
+      const url = `/api-proxy/auth`;
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({ username, password }),
         headers: {
           "Content-Type": "application/json",
-          "APP-KEY": process.env.NEXT_PUBLIC_APP_KEY || "",
         },
       });
-      const responseData: LoginResponse = await response.json();
+      
+      let responseData: LoginResponse | null = null;
+      try {
+        const textData = await response.text();
+        if (textData) {
+          responseData = JSON.parse(textData);
+        }
+      } catch (err) {
+        console.error("Failed to parse JSON response", err);
+      }
+      
       if (!response.ok) {
-        toast.error(responseData.message, { containerId: "toastLogin" });
+        toast.error(responseData?.message || `Error ${response.status}: ${response.statusText}`, { containerId: "toastLogin" });
         return;
       }
       if (responseData?.success === true) {
@@ -321,7 +330,7 @@ export default function SignInPage() {
               background: "rgba(255,255,255,0.06)",
             }} />
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", margin: 0 }}>
-              Don't have an account?{" "}
+              Belum punya akun?{" "}
               <Link
                 href="/sign-up"
                 style={{

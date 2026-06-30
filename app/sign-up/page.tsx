@@ -29,21 +29,29 @@ export default function SignUpPage() {
           address,
           name,
           phone,
-          service_id: 573, // Default service ID to bypass backend validation requirement
+          service_id: 1, // Default service ID to bypass backend validation requirement
         });
-        const url = `${process.env.NEXT_PUBLIC_BASE_URL}/customers`;
+        const url = `/api-proxy/customers`;
         const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "app-key": `${process.env.NEXT_PUBLIC_APP_KEY}`,
           },
           body: request,
         });
 
+        let responseData: any = null;
+        try {
+          const textData = await response.text();
+          if (textData) {
+            responseData = JSON.parse(textData);
+          }
+        } catch (err) {
+          console.error("Failed to parse JSON response", err);
+        }
+        
         if (!response.ok) {
-          const errorData = await response.json();
-          toast.error(errorData.message || "Failed to register customer", { containerId: "toastSignUp" });
+          toast.error(responseData?.message || `Error ${response.status}: ${response.statusText}`, { containerId: "toastSignUp" });
           return;
         }
 
@@ -164,7 +172,7 @@ export default function SignUpPage() {
                 label="Username"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                placeholder="Enter username"
+                placeholder="Masukkan nama pengguna"
                 icon={<User size={16} />}
               />
 
@@ -174,7 +182,7 @@ export default function SignUpPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="Create password"
+                placeholder="Buat kata sandi"
                 icon={<Lock size={16} />}
                 rightIcon={
                   <button
@@ -203,7 +211,7 @@ export default function SignUpPage() {
                 label="Full Name"
                 value={name}
                 onChange={e => setName(e.target.value)}
-                placeholder="Enter full name"
+                placeholder="Masukkan nama lengkap"
                 icon={<User size={16} />}
               />
 
@@ -230,7 +238,7 @@ export default function SignUpPage() {
                 label="Detailed Address"
                 value={address}
                 onChange={e => setAddress(e.target.value)}
-                placeholder="Full residential or property address"
+                placeholder="Alamat rumah atau properti lengkap"
                 icon={<MapPin size={16} />}
               />
 
@@ -276,7 +284,7 @@ export default function SignUpPage() {
               background: "rgba(255,255,255,0.06)",
             }} />
             <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", margin: 0 }}>
-              Already have an account?{" "}
+              Sudah punya akun?{" "}
               <Link
                 href="/sign-in"
                 style={{

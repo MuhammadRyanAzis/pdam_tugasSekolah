@@ -39,7 +39,7 @@ async function getPayments(): Promise<PaymentsResponse> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/payments/me`, {
       method: "GET", cache: "no-store",
       headers: {
-        "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+        "app-key": process.env.APP_KEY || "",
         "Authorization": `Bearer ${await getCookies("token")}`,
       },
     })
@@ -138,7 +138,7 @@ export default async function CustomerPaymentsPage() {
             </div>
             <div>
               <h1 style={{ fontSize: "clamp(24px,4vw,36px)", fontWeight: 900, color: "#a855f7", margin: 0, letterSpacing: "-0.02em", textShadow: "0 0 24px rgba(168,85,247,0.3)" }}>
-                My Payments
+                Pembayaran Saya
               </h1>
               <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", margin: "4px 0 0", display: "flex", alignItems: "center", gap: "6px" }}>
                 <Hash size={13} style={{ color: "#38bdf8" }} />
@@ -184,7 +184,7 @@ export default async function CustomerPaymentsPage() {
               }}>
                 <Receipt size={28} style={{ color: "rgba(255,255,255,0.2)" }} />
               </div>
-              <h3 style={{ fontSize: "20px", fontWeight: 700, color: "rgba(255,255,255,0.6)", margin: "0 0 8px" }}>No Payments Found</h3>
+              <h3 style={{ fontSize: "20px", fontWeight: 700, color: "rgba(255,255,255,0.6)", margin: "0 0 8px" }}>Tidak Ada Pembayaran Ditemukan</h3>
               <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.3)", maxWidth: "380px", margin: "0 auto", lineHeight: 1.7 }}>
                 You haven't made any payments yet. When you pay a bill, your payment history will appear here.
               </p>
@@ -217,7 +217,7 @@ export default async function CustomerPaymentsPage() {
                   </div>
 
                   <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#ffffff", margin: "0 0 4px" }}>
-                    Payment #{payment.id}
+                    Pembayaran #{payment.id}
                   </h3>
                   <p style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.3)", margin: "0", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                     Bill ID: {payment.bill_id}
@@ -234,7 +234,7 @@ export default async function CustomerPaymentsPage() {
                   }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                       <Calendar size={13} style={{ color: "#a855f7" }} />
-                      <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>Date</span>
+                      <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>Tanggal</span>
                     </div>
                     <span style={{ fontSize: "12px", fontWeight: 700, color: "#ffffff" }}>
                       {new Date(payment.createdAt).toLocaleDateString()}

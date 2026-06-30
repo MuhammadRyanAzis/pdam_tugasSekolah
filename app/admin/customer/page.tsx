@@ -58,7 +58,7 @@ async function getCustomers(): Promise<CustomersResponse> {
         method: "GET",
         cache: "no-store",
         headers: {
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+          "app-key": process.env.APP_KEY || "",
           "Authorization": `Bearer ${await getCookies("token")}`
         }
       }
@@ -68,7 +68,7 @@ async function getCustomers(): Promise<CustomersResponse> {
       const data = await response.json()
       return {
         success: false,
-        message: data?.message || "Failed to fetch customers",
+        message: data?.message || "Gagal mengambil data pelanggan",
         data: [],
         count: 0
       }
@@ -78,7 +78,7 @@ async function getCustomers(): Promise<CustomersResponse> {
   } catch {
     return {
       success: false,
-      message: "Failed to fetch customers",
+      message: "Gagal mengambil data pelanggan",
       data: [],
       count: 0
     }
@@ -93,40 +93,19 @@ export default async function customersPage(props: {
 
   if (!success) {
     return (
-      <div style={{
-        minHeight: "100vh", backgroundColor: "#0a0f1e",
-        display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "24px", color: "#fff",
-      }}>
-        <div style={{
-          borderRadius: "20px", padding: "40px",
-          background: "rgba(239,68,68,0.06)",
-          border: "1px solid rgba(239,68,68,0.2)",
-          maxWidth: "400px", width: "100%", textAlign: "center",
-        }}>
-          <div style={{
-            width: "56px", height: "56px", borderRadius: "50%",
-            background: "rgba(239,68,68,0.1)",
-            border: "1px solid rgba(239,68,68,0.25)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            margin: "0 auto 16px",
-          }}>
-            <Info size={24} style={{ color: "#ef4444" }} />
+      <div className="min-h-screen bg-[#0a0f1e] flex items-center justify-center p-6 text-white">
+        <div className="rounded-2xl p-10 bg-[#ef4444]/[0.06] border border-[#ef4444]/20 max-w-[400px] w-full text-center">
+          <div className="w-14 h-14 rounded-full bg-[#ef4444]/10 border border-[#ef4444]/25 flex items-center justify-center mx-auto mb-4">
+            <Info size={24} className="text-[#ef4444]" />
           </div>
-          <h1 style={{ fontSize: "22px", fontWeight: 900, color: "#ef4444", margin: "0 0 8px" }}>
-            Fetch Error
+          <h1 className="text-[22px] font-black text-[#ef4444] m-0 mb-2">
+            Terjadi Kesalahan
           </h1>
-          <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)", margin: "0 0 24px" }}>
+          <p className="text-sm text-white/40 m-0 mb-6">
             {message}
           </p>
-          <Link href="/admin/profile" style={{
-            display: "inline-block", padding: "10px 24px",
-            borderRadius: "10px", background: "rgba(255,255,255,0.06)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "rgba(255,255,255,0.8)", fontSize: "13px",
-            fontWeight: 600, textDecoration: "none",
-          }}>
-            Back to Dashboard
+          <Link href="/admin/profile" className="inline-block px-6 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-white/80 text-[13px] font-semibold no-underline">
+            Kembali ke Dasbor
           </Link>
         </div>
       </div>
@@ -143,93 +122,54 @@ export default async function customersPage(props: {
   const displayCount = filteredData.length
 
   return (
-    <div style={{
-      minHeight: "100vh", backgroundColor: "#0a0f1e",
-      color: "#ffffff", position: "relative", overflow: "hidden",
-    }}>
+    <div className="min-h-screen bg-[#0a0f1e] text-white relative overflow-hidden">
       {/* Background Orbs */}
-      <div style={{
-        position: "absolute", width: "600px", height: "600px", borderRadius: "50%",
-        top: "-150px", right: "-150px",
-        background: "rgba(56,189,248,0.08)", filter: "blur(120px)", pointerEvents: "none",
-      }} />
-      <div style={{
-        position: "absolute", width: "500px", height: "500px", borderRadius: "50%",
-        bottom: "-100px", left: "-100px",
-        background: "rgba(16,185,129,0.06)", filter: "blur(100px)", pointerEvents: "none",
-      }} />
+      <div className="absolute w-[600px] h-[600px] rounded-full top-[-150px] right-[-150px] bg-[#38bdf8]/[0.08] blur-[120px] pointer-events-none" />
+      <div className="absolute w-[500px] h-[500px] rounded-full bottom-[-100px] left-[-100px] bg-[#10b981]/[0.06] blur-[100px] pointer-events-none" />
 
       {/* Grid Overlay */}
-      <div style={{
-        position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none",
-        backgroundImage: `linear-gradient(#38bdf8 1px, transparent 1px), linear-gradient(90deg, #38bdf8 1px, transparent 1px)`,
-        backgroundSize: '60px 60px'
-      }} />
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(#38bdf8 1px, transparent 1px), linear-gradient(90deg, #38bdf8 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }}
+      />
 
-      <div style={{ position: "relative", zIndex: 10, padding: "40px 48px", maxWidth: "1400px", margin: "0 auto" }}>
+      <div className="relative z-10 py-10 px-6 sm:px-12 max-w-[1400px] mx-auto">
         {/* Header Section */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "44px", flexWrap: "wrap", gap: "20px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-            <div style={{
-              width: "54px", height: "54px", borderRadius: "16px",
-              background: "rgba(56,189,248,0.1)",
-              border: "1px solid rgba(56,189,248,0.25)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 0 20px rgba(56,189,248,0.15)",
-            }}>
-              <Users size={24} style={{ color: "#38bdf8" }} />
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-11 gap-5">
+          <div className="flex items-center gap-4.5">
+            <div className="w-[54px] h-[54px] rounded-2xl bg-[#38bdf8]/10 border border-[#38bdf8]/25 flex items-center justify-center shadow-[0_0_20px_rgba(56,189,248,0.15)] shrink-0">
+              <Users size={24} className="text-[#38bdf8]" />
             </div>
             <div>
-              <h1 style={{
-                fontSize: "clamp(24px, 4vw, 36px)", fontWeight: 900,
-                color: "#38bdf8", margin: 0, letterSpacing: "-0.02em",
-                textShadow: "0 0 24px rgba(56,189,248,0.3)",
-              }}>
-                Customer Database
+              <h1 className="text-[clamp(24px,4vw,36px)] font-black text-[#38bdf8] m-0 tracking-[-0.02em] drop-shadow-[0_0_24px_rgba(56,189,248,0.3)]">
+                Database Pelanggan
               </h1>
-              <p style={{
-                fontSize: "13px", color: "rgba(255,255,255,0.4)",
-                margin: "6px 0 0", display: "flex", alignItems: "center", gap: "6px",
-              }}>
-                <Hash size={14} style={{ color: "#38bdf8" }} />
-                {displayCount} identified customers registered
+              <p className="text-[13px] text-white/40 mt-1.5 flex items-center gap-1.5 m-0">
+                <Hash size={14} className="text-[#38bdf8]" />
+                {displayCount} pelanggan terdaftar
               </p>
             </div>
           </div>
 
-          <Link href="/admin/customer/add" style={{ textDecoration: "none" }}>
-            <button style={{
-              display: "flex", alignItems: "center", gap: "8px",
-              padding: "12px 24px", borderRadius: "12px",
-              background: "#38bdf8", color: "#0a0f1e",
-              fontSize: "14px", fontWeight: 700, border: "none", cursor: "pointer",
-              boxShadow: "0 0 20px rgba(56,189,248,0.4)", transition: "all 0.2s",
-            }}>
+          <Link href="/admin/customer/add" className="no-underline w-full sm:w-auto">
+            <button className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#38bdf8] text-[#0a0f1e] text-sm font-bold border-none cursor-pointer shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-200 hover:scale-105">
               <Plus size={16} />
-              Regist New Customer
+              Daftar Pelanggan Baru
             </button>
           </Link>
         </div>
 
         {/* Search Container */}
-        <div style={{
-          background: "rgba(255,255,255,0.025)",
-          borderRadius: "24px", padding: "32px",
-          border: "1px solid rgba(74,222,128,0.18)",
-          marginBottom: "32px", position: "relative", overflow: "hidden",
-        }}>
-          <div style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-            background: "linear-gradient(90deg, #38bdf8, #4ade80, transparent)",
-          }} />
+        <div className="bg-white/[0.025] rounded-3xl p-6 sm:p-8 border border-[#4ade80]/[0.18] mb-8 relative overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#38bdf8] to-[#4ade80] opacity-50" />
 
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "16px" }}>
-            <Filter size={16} style={{ color: "#4ade80" }} />
-            <h2 style={{
-              fontSize: "13px", fontWeight: 700, color: "#4ade80",
-              textTransform: "uppercase", letterSpacing: "0.1em", margin: 0,
-            }}>
-              Customer Filter
+          <div className="flex items-center gap-2.5 mb-4">
+            <Filter size={16} className="text-[#4ade80]" />
+            <h2 className="text-[13px] font-bold text-[#4ade80] uppercase tracking-[0.1em] m-0">
+              Filter Pelanggan
             </h2>
           </div>
           <Search search={search} />
@@ -237,119 +177,76 @@ export default async function customersPage(props: {
 
         {/* Grid Content */}
         {displayCount === 0 ? (
-          <div style={{
-            padding: "80px 24px", textAlign: "center",
-            borderRadius: "32px", background: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.05)",
-          }}>
-            <div style={{
-              width: "72px", height: "72px", borderRadius: "50%",
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              margin: "0 auto 20px",
-            }}>
-              <SearchIcon size={32} style={{ color: "rgba(255,255,255,0.2)" }} />
+          <div className="py-20 px-6 text-center rounded-[32px] bg-white/[0.02] border border-white/5">
+            <div className="w-[72px] h-[72px] rounded-full bg-white/[0.04] border border-white/10 flex items-center justify-center mx-auto mb-5">
+              <SearchIcon size={32} className="text-white/20" />
             </div>
-            <h3 style={{ fontSize: "22px", fontWeight: 800, color: "rgba(255,255,255,0.7)", margin: "0 0 10px" }}>
-              Search Yielded No Results
+            <h3 className="text-[22px] font-bold text-white/70 m-0 mb-2.5">
+              Pencarian Tidak Menemukan Hasil
             </h3>
-            <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.35)", maxWidth: "400px", margin: "0 auto", lineHeight: 1.6 }}>
+            <p className="text-sm text-white/35 max-w-[400px] mx-auto leading-[1.6]">
               {search && search.trim() !== ''
-                ? `Zero matches for "${search}". Verify the spelling or attempt a broader query.`
-                : "The customer database is currently empty. Initiate your first registration."}
+                ? `Nol kecocokan untuk "${search}". Periksa ejaan atau gunakan kata kunci lain.`
+                : "Database pelanggan saat ini kosong. Mulai pendaftaran pertama Anda."}
             </p>
           </div>
         ) : (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-            gap: "24px",
-            marginBottom: "32px",
-          }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {filteredData.map(customer => (
               <div
                 key={customer.id}
-                style={{
-                  borderRadius: "24px", padding: "28px",
-                  background: "rgba(255,255,255,0.028)",
-                  border: "1px solid rgba(56,189,248,0.18)",
-                  position: "relative", overflow: "hidden",
-                }}
-                className="hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(56,189,248,0.08)] transition-all duration-300 group"
+                className="rounded-3xl p-7 bg-white/[0.028] border border-[#38bdf8]/20 relative overflow-hidden hover:border-[#38bdf8]/40 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(56,189,248,0.08)] transition-all duration-300 group"
               >
                 {/* Accent stripe */}
-                <div style={{
-                  position: "absolute", top: 0, left: "24px", right: "24px", height: "1px",
-                  background: "linear-gradient(90deg, #38bdf850, transparent)",
-                }} />
+                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-[#38bdf8]/30 to-transparent" />
 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "24px" }}>
-                  <div style={{
-                    width: "44px", height: "44px", borderRadius: "14px",
-                    background: "rgba(56,189,248,0.08)",
-                    border: "1px solid rgba(56,189,248,0.15)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}>
-                    <User size={20} style={{ color: "#38bdf8" }} />
+                <div className="flex justify-between items-start mb-6">
+                  <div className="w-11 h-11 rounded-2xl bg-[#38bdf8]/[0.08] border border-[#38bdf8]/15 flex items-center justify-center">
+                    <User size={20} className="text-[#38bdf8]" />
                   </div>
-                  <div style={{
-                    padding: "4px 12px", borderRadius: "999px",
-                    background: "rgba(16,185,129,0.08)",
-                    border: "1px solid rgba(16,185,129,0.2)",
-                    fontSize: "10px", fontWeight: 800,
-                    color: "#10b981", textTransform: "uppercase", letterSpacing: "0.12em",
-                  }}>
+                  <div className="px-3 py-1 rounded-full bg-[#10b981]/[0.08] border border-[#10b981]/20 text-[10px] font-black text-[#10b981] uppercase tracking-[0.12em]">
                     #{customer.customer_number}
                   </div>
                 </div>
 
-                <h3 style={{
-                  fontSize: "19px", fontWeight: 800,
-                  color: "#ffffff", margin: "0 0 16px",
-                  overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"
-                }} className="group-hover:text-cyan-400 transition-colors">
+                <h3 className="text-[19px] font-black text-white m-0 mb-4 truncate group-hover:text-[#38bdf8] transition-colors">
                   {customer.name}
                 </h3>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "14px", marginBottom: "28px" }}>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                    <Phone size={14} style={{ color: "rgba(255,255,255,0.3)", marginTop: "3px" }} />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Phone</span>
-                      <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)", fontWeight: 500 }}>{customer.phone || "—"}</span>
+                <div className="flex flex-col gap-3.5 mb-7">
+                  <div className="flex items-start gap-2.5">
+                    <Phone size={14} className="text-white/30 mt-1" />
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-white/30 font-bold uppercase tracking-[0.05em]">Telepon</span>
+                      <span className="text-[13px] text-white/75 font-medium">{customer.phone || "—"}</span>
                     </div>
                   </div>
-                  <div style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                    <MapPin size={14} style={{ color: "rgba(255,255,255,0.3)", marginTop: "3px" }} />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Address</span>
-                      <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.75)", fontWeight: 500, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                  <div className="flex items-start gap-2.5">
+                    <MapPin size={14} className="text-white/30 mt-1" />
+                    <div className="flex flex-col">
+                      <span className="text-[9px] text-white/30 font-bold uppercase tracking-[0.05em]">Alamat</span>
+                      <span className="text-[13px] text-white/75 font-medium line-clamp-2">
                         {customer.address || "—"}
                       </span>
                     </div>
                   </div>
-                  <div style={{ marginTop: "8px", paddingTop: "14px", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em" }}>Service Plan</span>
-                    <span style={{
-                      padding: "3px 8px", borderRadius: "6px",
-                      background: "rgba(56,189,248,0.06)", border: "1px solid rgba(56,189,248,0.15)",
-                      fontSize: "11px", fontWeight: 700, color: "#38bdf8"
-                    }}>
+                  <div className="mt-2 pt-3.5 border-t border-white/5 flex justify-between items-center">
+                    <span className="text-[9px] text-white/30 font-bold uppercase tracking-[0.05em]">Paket Layanan</span>
+                    <span className="px-2 py-1 rounded-md bg-[#38bdf8]/[0.06] border border-[#38bdf8]/15 text-[11px] font-bold text-[#38bdf8]">
                       {customer.service?.name || "Standard"}
                     </span>
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: "10px", position: "relative", zIndex: 20 }}>
+                <div className="flex gap-2.5 relative z-20">
                   <Link
                     href={`/admin/customer/edit/${customer.id}`}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all duration-300"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all duration-300 no-underline"
                   >
-                    <svg className="h-4 w-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
-                    Edit
+                    Ubah
                   </Link>
                   <DropCustomerButton selectedData={customer.id} />
                 </div>
@@ -359,31 +256,18 @@ export default async function customersPage(props: {
         )}
 
         {/* Footer Statistics */}
-        <div style={{
-          borderRadius: "20px", padding: "20px 28px",
-          background: "rgba(255,255,255,0.015)",
-          border: "1px solid rgba(255,255,255,0.06)",
-          display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px"
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{
-              width: "38px", height: "38px", borderRadius: "10px",
-              background: "rgba(56,189,248,0.08)", border: "1px solid rgba(56,189,248,0.15)",
-              display: "flex", alignItems: "center", justifyContent: "center"
-            }}>
-              <Info size={18} style={{ color: "#38bdf8" }} />
+        <div className="rounded-[20px] p-5 sm:px-7 bg-white/[0.015] border border-white/[0.06] flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-[38px] h-[38px] rounded-xl bg-[#38bdf8]/[0.08] border border-[#38bdf8]/15 flex items-center justify-center shrink-0">
+              <Info size={18} className="text-[#38bdf8]" />
             </div>
-            <span style={{ fontSize: "14px", color: "rgba(255,255,255,0.4)" }}>
-              Displaying <span style={{ color: "#ffffff", fontWeight: 700 }}>{displayCount}</span> of <span style={{ color: "#ffffff", fontWeight: 700 }}>{count}</span> total records
+            <span className="text-sm text-white/40">
+              Menampilkan <span className="text-white font-bold">{displayCount}</span> dari <span className="text-white font-bold">{count}</span> total pelanggan
             </span>
           </div>
           {search?.trim() && (
-            <div style={{
-              padding: "7px 16px", borderRadius: "12px",
-              background: "rgba(56,189,248,0.05)", border: "1px solid rgba(56,189,248,0.15)",
-              fontSize: "12px", color: "rgba(255,255,255,0.3)"
-            }}>
-              Filtering by keyword: <span style={{ color: "#38bdf8", fontWeight: 800 }}>"{search}"</span>
+            <div className="px-4 py-2 rounded-xl bg-[#38bdf8]/5 border border-[#38bdf8]/15 text-xs text-white/30 text-center">
+              Memfilter kata kunci: <span className="text-[#38bdf8] font-bold">"{search}"</span>
             </div>
           )}
         </div>

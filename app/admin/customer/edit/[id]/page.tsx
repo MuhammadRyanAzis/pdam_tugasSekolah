@@ -34,7 +34,7 @@ async function getCustomerById(id: string): Promise<Customer | null> {
         method: "GET",
         cache: "no-store",
         headers: {
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+          "app-key": process.env.APP_KEY || "",
           "authorization": `Bearer ${await getCookies("token")}`,
         },
       }
@@ -62,7 +62,7 @@ async function getServices(): Promise<Service[]> {
         method: "GET",
         cache: "no-store",
         headers: {
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+          "app-key": process.env.APP_KEY || "",
           "authorization": `Bearer ${await getCookies("token")}`,
         },
       }
@@ -90,7 +90,7 @@ export default async function EditPage({
   const services = await getServices()
 
   if (!customer) {
-    return <div>Customer not found</div>
+    return <div>Pelanggan tidak ditemukan</div>
   }
 
   return (

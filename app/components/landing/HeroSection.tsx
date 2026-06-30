@@ -47,10 +47,10 @@ function AnimatedHeroStat({ stat, startDelay }: { stat: HeroStat; startDelay: nu
 
   // Non-numeric stats display as-is
   if (stat.numericEnd === undefined) {
-    return <span style={{ fontSize: "26px", fontWeight: 900, color: "#38bdf8", display: "block", lineHeight: 1 }}>{stat.v}</span>;
+    return <span className="text-xl md:text-[26px] font-black text-[#38bdf8] block leading-none">{stat.v}</span>;
   }
 
-  return <span style={{ fontSize: "26px", fontWeight: 900, color: "#38bdf8", display: "block", lineHeight: 1 }}>{display}</span>;
+  return <span className="text-xl md:text-[26px] font-black text-[#38bdf8] block leading-none">{display}</span>;
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -60,147 +60,73 @@ export default function HeroSection() {
   };
 
   return (
-    <section
-      id="home"
-      style={{ backgroundColor: "transparent", minHeight: "100vh", position: "relative", zIndex: 10 }}
-    >
+    <section id="home" className="bg-transparent min-h-screen relative z-10 overflow-hidden">
       {/* Grid overlay */}
       <div
+        className="absolute inset-0 z-0 pointer-events-none opacity-[0.04]"
         style={{
-          position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", opacity: 0.04,
           backgroundImage: `linear-gradient(#00e5ff 1px, transparent 1px), linear-gradient(90deg, #00e5ff 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
 
       {/* Content wrapper */}
-      <div
-        style={{
-          maxWidth: "1280px", margin: "0 auto", padding: "0 48px",
-          minHeight: "100vh", display: "flex", alignItems: "center",
-          position: "relative", zIndex: 10,
-        }}
-      >
-        <div
-          style={{
-            display: "grid", gridTemplateColumns: "1fr 1fr",
-            gap: "80px", alignItems: "center", width: "100%",
-            paddingTop: "80px", paddingBottom: "40px",
-          }}
-        >
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 min-h-[calc(100vh-80px)] md:min-h-screen flex items-center relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full pt-16 lg:pt-20 pb-10">
 
           {/* ── LEFT COLUMN ── */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <div className="flex flex-col items-start w-full z-10">
 
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                padding: "6px 16px", borderRadius: "999px", marginBottom: "28px",
-                border: "1px solid rgba(74,222,128,0.4)",
-                color: "#4ade80", background: "rgba(74,222,128,0.05)",
-                fontSize: "11px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
-              }}
+              className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-1.5 rounded-full mb-6 border border-[#4ade80]/40 text-[#4ade80] bg-[#4ade80]/5 text-[10px] md:text-[11px] font-bold tracking-widest uppercase"
             >
-              <span style={{
-                width: "7px", height: "7px", borderRadius: "50%",
-                background: "#4ade80", boxShadow: "0 0 8px #4ade80",
-                animation: "pulse 2s infinite",
-              }} />
-              Public Water Service
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80] shadow-[0_0_8px_#4ade80] animate-pulse" />
+              Layanan Air Publik
             </motion.div>
 
             {/* H1 */}
             <motion.h1
               initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}
-              style={{
-                fontSize: "clamp(52px, 7vw, 88px)",
-                fontWeight: 900, lineHeight: 1.0,
-                letterSpacing: "-2px", margin: 0, marginBottom: "16px",
-                color: "#38bdf8",
-                textShadow: "0 0 40px rgba(56,189,248,0.35)",
-              }}
+              className="text-[clamp(44px,8vw,88px)] font-black leading-[1] tracking-tight m-0 mb-4 text-[#38bdf8] drop-shadow-[0_0_40px_rgba(56,189,248,0.35)]"
             >
               PDAM
               <br />
-              <span style={{ color: "#ffffff", textShadow: "none" }}>Baru</span>
+              <span className="text-white drop-shadow-none">Baru</span>
             </motion.h1>
 
             {/* Green accent line */}
             <motion.div
               initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              style={{
-                width: "56px", height: "2px", marginBottom: "24px",
-                transformOrigin: "left",
-                background: "linear-gradient(90deg, #4ade80, transparent)",
-                boxShadow: "0 0 10px rgba(74,222,128,0.6)",
-              }}
+              className="w-12 h-0.5 md:w-14 mb-5 md:mb-6 origin-left bg-gradient-to-r from-[#4ade80] to-transparent shadow-[0_0_10px_rgba(74,222,128,0.6)]"
             />
 
             {/* Tagline */}
             <motion.p
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-              style={{
-                fontSize: "16px", lineHeight: 1.75,
-                color: "rgba(255,255,255,0.5)",
-                maxWidth: "420px", margin: 0, marginBottom: "36px",
-              }}
+              className="text-sm md:text-base leading-relaxed text-white/50 max-w-[420px] m-0 mb-8 md:mb-9"
             >
-              Clean water delivered reliably — managing public utility
-              services for a smarter, more sustainable community.
+              Air bersih yang disalurkan secara andal — mengelola layanan utilitas publik untuk komunitas yang lebih cerdas dan berkelanjutan.
             </motion.p>
 
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.45 }}
-              style={{ display: "flex", gap: "16px", marginBottom: "48px", flexWrap: "wrap" }}
+              className="flex flex-wrap gap-4 w-full md:w-auto mb-10 md:mb-12"
             >
-              <Link href="/sign-up">
-                <button
-                  style={{
-                    padding: "12px 28px", borderRadius: "12px",
-                    background: "#38bdf8", color: "#0a0f1e",
-                    fontSize: "14px", fontWeight: 700, border: "none", cursor: "pointer",
-                    boxShadow: "0 0 24px rgba(56,189,248,0.5)",
-                    transition: "all 0.3s", letterSpacing: "0.02em",
-                  }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.05)";
-                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 36px rgba(56,189,248,0.75)";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
-                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 24px rgba(56,189,248,0.5)";
-                  }}
-                >
-                  Register Now
+              <Link href="/sign-up" className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto px-6 py-3.5 md:px-7 md:py-3 rounded-xl bg-[#38bdf8] text-[#0a0f1e] text-sm font-bold border-none cursor-pointer shadow-[0_0_24px_rgba(56,189,248,0.5)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_36px_rgba(56,189,248,0.75)] tracking-wide">
+                  Daftar Sekarang
                 </button>
               </Link>
 
               <button
                 onClick={() => scrollTo("services")}
-                style={{
-                  padding: "12px 28px", borderRadius: "12px",
-                  color: "#4ade80", fontSize: "14px", fontWeight: 600,
-                  border: "1px solid rgba(74,222,128,0.4)",
-                  background: "rgba(74,222,128,0.04)",
-                  cursor: "pointer", display: "flex", alignItems: "center", gap: "8px",
-                  transition: "all 0.3s",
-                }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.05)";
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(74,222,128,0.3)";
-                  (e.currentTarget as HTMLButtonElement).style.background = "rgba(74,222,128,0.08)";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)";
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
-                  (e.currentTarget as HTMLButtonElement).style.background = "rgba(74,222,128,0.04)";
-                }}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 md:px-7 md:py-3 rounded-xl text-[#4ade80] text-sm font-semibold border border-[#4ade80]/40 bg-[#4ade80]/5 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(74,222,128,0.3)] hover:bg-[#4ade80]/10"
               >
-                Our Services
+                Layanan Kami
                 <ArrowRight size={16} />
               </button>
             </motion.div>
@@ -208,23 +134,19 @@ export default function HeroSection() {
             {/* Stats row */}
             <motion.div
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.6 }}
-              style={{ display: "flex", gap: "0" }}
+              className="flex gap-0"
             >
               {([
-                { v: "10K+", l: "Customers", numericEnd: 10000, suffix: "+", isK: true },
-                { v: "24/7", l: "Support" },
-                { v: "99%",  l: "Uptime",    numericEnd: 99,    suffix: "%"  },
+                { v: "10K+", l: "Pelanggan", numericEnd: 10000, suffix: "+", isK: true },
+                { v: "24/7", l: "Dukungan" },
+                { v: "99%",  l: "Waktu Aktif",    numericEnd: 99,    suffix: "%"  },
               ] as HeroStat[]).map((s, i) => (
                 <div
                   key={s.l}
-                  style={{
-                    paddingRight: i < 2 ? "32px" : "0",
-                    paddingLeft: i > 0 ? "32px" : "0",
-                    borderRight: i < 2 ? "1px solid rgba(255,255,255,0.1)" : "none",
-                  }}
+                  className={`px-4 md:px-8 ${i < 2 ? 'border-r border-white/10' : ''} ${i === 0 ? 'pl-0' : ''} ${i === 2 ? 'pr-0' : ''}`}
                 >
                   <AnimatedHeroStat stat={s} startDelay={700 + i * 150} />
-                  <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+                  <span className="text-[9px] md:text-[10px] text-white/35 uppercase tracking-widest mt-1 block">
                     {s.l}
                   </span>
                 </div>
@@ -238,70 +160,37 @@ export default function HeroSection() {
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.3 }}
-            style={{ position: "relative", display: "flex", justifyContent: "center", alignItems: "center", height: "420px" }}
+            className="relative flex justify-center items-center h-[300px] md:h-[420px] mt-8 lg:mt-0"
           >
             {/* Outer ring — green, rotating clockwise */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-              style={{
-                position: "absolute",
-                width: "340px", height: "340px", borderRadius: "50%",
-                border: "1px solid rgba(74,222,128,0.2)",
-              }}
+              className="absolute w-[240px] h-[240px] md:w-[340px] md:h-[340px] rounded-full border border-[#4ade80]/20"
             >
-              <div style={{
-                position: "absolute", top: 0, left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: "10px", height: "10px", borderRadius: "50%",
-                background: "#4ade80", boxShadow: "0 0 12px #4ade80, 0 0 24px rgba(74,222,128,0.5)",
-              }} />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-[#4ade80] shadow-[0_0_12px_#4ade80,0_0_24px_rgba(74,222,128,0.5)]" />
             </motion.div>
 
             {/* Middle ring — blue, rotating counter-clockwise */}
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-              style={{
-                position: "absolute",
-                width: "240px", height: "240px", borderRadius: "50%",
-                border: "1px solid rgba(56,189,248,0.18)",
-              }}
+              className="absolute w-[170px] h-[170px] md:w-[240px] md:h-[240px] rounded-full border border-[#38bdf8]/20"
             >
-              <div style={{
-                position: "absolute", bottom: 0, left: "50%",
-                transform: "translate(-50%, 50%)",
-                width: "8px", height: "8px", borderRadius: "50%",
-                background: "#38bdf8", boxShadow: "0 0 12px #38bdf8, 0 0 24px rgba(56,189,248,0.5)",
-              }} />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#38bdf8] shadow-[0_0_12px_#38bdf8,0_0_24px_rgba(56,189,248,0.5)]" />
             </motion.div>
 
             {/* Inner ring — faint */}
-            <div style={{
-              position: "absolute",
-              width: "155px", height: "155px", borderRadius: "50%",
-              border: "1px solid rgba(74,222,128,0.08)",
-            }} />
+            <div className="absolute w-[110px] h-[110px] md:w-[155px] md:h-[155px] rounded-full border border-[#4ade80]/10" />
 
             {/* Center icon box */}
             <motion.div
               animate={{ y: [-8, 8, -8] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              style={{
-                position: "relative", zIndex: 10,
-                width: "110px", height: "110px", borderRadius: "24px",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: "rgba(56,189,248,0.07)",
-                border: "1px solid rgba(56,189,248,0.25)",
-                boxShadow: "0 0 40px rgba(56,189,248,0.18), inset 0 0 30px rgba(56,189,248,0.06)",
-              }}
+              className="relative z-10 w-[80px] h-[80px] md:w-[110px] md:h-[110px] rounded-[20px] md:rounded-[24px] flex items-center justify-center bg-[#38bdf8]/[0.07] border border-[#38bdf8]/25 shadow-[0_0_40px_rgba(56,189,248,0.18),inset_0_0_30px_rgba(56,189,248,0.06)]"
             >
               <Droplet
-                size={48}
-                style={{
-                  color: "#38bdf8",
-                  filter: "drop-shadow(0 0 16px rgba(56,189,248,0.9))",
-                }}
+                className="w-[32px] h-[32px] md:w-[48px] md:h-[48px] text-[#38bdf8] drop-shadow-[0_0_16px_rgba(56,189,248,0.9)]"
               />
             </motion.div>
 
@@ -309,14 +198,6 @@ export default function HeroSection() {
 
         </div>
       </div>
-
-      {/* Pulse keyframe */}
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-      `}</style>
     </section>
   );
 }

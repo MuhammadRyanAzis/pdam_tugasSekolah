@@ -36,7 +36,7 @@ async function getBillById(id: string): Promise<Bill | null> {
         method: "GET",
         cache: "no-store",
         headers: {
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+          "app-key": process.env.APP_KEY || "",
           "authorization": `Bearer ${await getCookies("token")}`,
         },
       }
@@ -58,7 +58,7 @@ async function getAllCustomers(): Promise<Customer[]> {
         method: "GET",
         cache: "no-store",
         headers: {
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+          "app-key": process.env.APP_KEY || "",
           "authorization": `Bearer ${await getCookies("token")}`,
         },
       }

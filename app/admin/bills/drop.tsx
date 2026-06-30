@@ -17,12 +17,11 @@ export default function DropBillButton({ selectedData }: { selectedData: number 
     setIsLoading(true)
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/bills/${selectedData}`,
+        `/api-proxy/bills/${selectedData}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
             "authorization": `Bearer ${await getCookies("token")}`,
           },
         }
@@ -122,7 +121,7 @@ export default function DropBillButton({ selectedData }: { selectedData: number 
                 style={{ flex: 1, padding: "12px", borderRadius: "12px", background: "#ef4444", color: "#ffffff", fontSize: "14px", fontWeight: 700, border: "none", cursor: "pointer", boxShadow: "0 0 20px rgba(239,68,68,0.35)", transition: "all 0.2s" }}
                 onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 30px rgba(239,68,68,0.6)"; (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.02)" }}
                 onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 20px rgba(239,68,68,0.35)"; (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)" }}
-              >Delete</button>
+              >Hapus</button>
             </div>
           </ModalCard>
         </Overlay>

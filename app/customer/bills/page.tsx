@@ -45,7 +45,7 @@ async function getBills(): Promise<BillsResponse> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bills/me?quantity=100`, {
       method: "GET", cache: "no-store",
       headers: {
-        "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+        "app-key": process.env.APP_KEY || "",
         "Authorization": `Bearer ${await getCookies("token")}`,
       },
     })
@@ -70,7 +70,7 @@ function StatusBadge({ status }: { status: string | boolean }) {
       border: "1px solid rgba(74,222,128,0.3)",
     }}>
       <CheckCircle2 size={12} style={{ color: "#4ade80" }} />
-      <span style={{ fontSize: "10px", fontWeight: 700, color: "#4ade80", letterSpacing: "0.1em", textTransform: "uppercase" }}>Paid</span>
+      <span style={{ fontSize: "10px", fontWeight: 700, color: "#4ade80", letterSpacing: "0.1em", textTransform: "uppercase" }}>Lunas</span>
     </div>
   )
   if (s === "pending") return (
@@ -81,7 +81,7 @@ function StatusBadge({ status }: { status: string | boolean }) {
       border: "1px solid rgba(234,179,8,0.3)",
     }}>
       <Clock size={12} style={{ color: "#eab308" }} />
-      <span style={{ fontSize: "10px", fontWeight: 700, color: "#eab308", letterSpacing: "0.1em", textTransform: "uppercase" }}>Pending</span>
+      <span style={{ fontSize: "10px", fontWeight: 700, color: "#eab308", letterSpacing: "0.1em", textTransform: "uppercase" }}>Tertunda</span>
     </div>
   )
   return (
@@ -219,7 +219,7 @@ export default async function BillsPage({
               }}>
                 <SearchIcon size={28} style={{ color: "rgba(255,255,255,0.2)" }} />
               </div>
-              <h3 style={{ fontSize: "20px", fontWeight: 700, color: "rgba(255,255,255,0.6)", margin: "0 0 8px" }}>No Bills Found</h3>
+              <h3 style={{ fontSize: "20px", fontWeight: 700, color: "rgba(255,255,255,0.6)", margin: "0 0 8px" }}>Tidak Ada Tagihan Ditemukan</h3>
               <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.3)", maxWidth: "380px", margin: "0 auto", lineHeight: 1.7 }}>
                 {search?.trim()
                   ? `No bill matches "${search}". Try a different keyword.`
@@ -256,7 +256,7 @@ export default async function BillsPage({
 
                   {/* Customer name */}
                   <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#ffffff", margin: "0 0 4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                    {bill.customer?.name || `Customer #${bill.customer_id}`}
+                    {bill.customer?.name || `Pelanggan #${bill.customer_id}`}
                   </h3>
                   <p style={{ fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.3)", margin: "0 0 18px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                     {bill.customer?.customer_number || "-"}
@@ -290,7 +290,7 @@ export default async function BillsPage({
                     <div style={{ padding: "10px 12px", borderRadius: "10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
                         <CreditCard size={12} style={{ color: "#4ade80" }} />
-                        <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.08em" }}>Amount</span>
+                        <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.08em" }}>Jumlah</span>
                       </div>
                       <span style={{ fontSize: "13px", fontWeight: 700, color: "#4ade80" }}>
                         Rp {bill.amount?.toLocaleString("id-ID")}

@@ -54,7 +54,7 @@ export default function BillCard({ bill }: { bill: BillData }) {
         margin: "0 0 4px",
         whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
       }}>
-        {bill.customer?.name || `Customer #${bill.customer_id}`}
+        {bill.customer?.name || `Pelanggan #${bill.customer_id}`}
       </h3>
       <p style={{
         fontSize: "10px", fontWeight: 700,
@@ -93,7 +93,7 @@ export default function BillCard({ bill }: { bill: BillData }) {
         <div style={{ padding: "10px 12px", borderRadius: "10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
             <CreditCard size={12} style={{ color: "#4ade80" }} />
-            <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.08em" }}>Amount</span>
+            <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.08em" }}>Jumlah</span>
           </div>
           <span style={{ fontSize: "13px", fontWeight: 700, color: "#4ade80" }}>
             Rp {bill.amount?.toLocaleString("id-ID")}
@@ -141,13 +141,13 @@ function StatusBadge({ paid }: { paid: boolean }) {
   if (paid) return (
     <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "4px 12px", borderRadius: "999px", background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.3)" }}>
       <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 6px #4ade80" }} />
-      <span style={{ fontSize: "10px", fontWeight: 700, color: "#4ade80", letterSpacing: "0.1em", textTransform: "uppercase" }}>Paid</span>
+      <span style={{ fontSize: "10px", fontWeight: 700, color: "#4ade80", letterSpacing: "0.1em", textTransform: "uppercase" }}>Lunas</span>
     </div>
   )
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "6px", padding: "4px 12px", borderRadius: "999px", background: "rgba(234,179,8,0.08)", border: "1px solid rgba(234,179,8,0.3)" }}>
       <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#eab308", boxShadow: "0 0 6px #eab308" }} />
-      <span style={{ fontSize: "10px", fontWeight: 700, color: "#eab308", letterSpacing: "0.1em", textTransform: "uppercase" }}>Pending</span>
+      <span style={{ fontSize: "10px", fontWeight: 700, color: "#eab308", letterSpacing: "0.1em", textTransform: "uppercase" }}>Tertunda</span>
     </div>
   )
 }

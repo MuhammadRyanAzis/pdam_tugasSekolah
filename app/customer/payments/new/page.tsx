@@ -27,7 +27,7 @@ async function getPendingBills(): Promise<BillsResponse> {
     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bills/me?quantity=100`, {
       method: "GET", cache: "no-store",
       headers: {
-        "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
+        "app-key": process.env.APP_KEY || "",
         "Authorization": `Bearer ${await getCookies("token")}`,
       },
     })
@@ -87,7 +87,7 @@ export default async function NewPaymentPage() {
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.03, backgroundImage: `linear-gradient(#00e5ff 1px,transparent 1px),linear-gradient(90deg,#00e5ff 1px,transparent 1px)`, backgroundSize: "60px 60px" }} />
 
       <div style={{ position: "relative", zIndex: 10, padding: "40px 24px", maxWidth: "600px", margin: "0 auto" }}>
-        <Suspense fallback={<div style={{ color: "rgba(255,255,255,0.4)", textAlign: "center", padding: "40px" }}>Loading...</div>}>
+        <Suspense fallback={<div style={{ color: "rgba(255,255,255,0.4)", textAlign: "center", padding: "40px" }}>Memuat...</div>}>
           <PaymentForm pendingBills={data || []} />
         </Suspense>
       </div>

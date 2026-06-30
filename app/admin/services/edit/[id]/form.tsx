@@ -34,12 +34,11 @@ export default function FormService({ service }: Props) {
     setIsLoading(true)
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/services/${service.id}`,
+        `/api-proxy/services/${service.id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
             "authorization": `Bearer ${await getCookies("token")}`,
           },
           body: JSON.stringify({ name: serviceName, min_usage: minUsage, max_usage: maxUsage, price }),

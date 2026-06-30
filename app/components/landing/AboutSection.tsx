@@ -23,15 +23,15 @@ const XIcon = () => (
 );
 
 const timeline = [
-  { year: "1985", title: "Founded in Malang",       desc: "Began serving 200 households in the core district." },
-  { year: "2005", title: "Regional Expansion",      desc: "Extended pipeline network across 5 sub-districts." },
-  { year: "2020", title: "Digital Platform Launch", desc: "Launched online billing and customer portal." },
+  { year: "1985", title: "Didirikan di Malang",       desc: "Mulai melayani 200 rumah tangga di distrik inti." },
+  { year: "2005", title: "Ekspansi Regional",      desc: "Memperluas jaringan pipa di 5 kecamatan." },
+  { year: "2020", title: "Peluncuran Platform Digital", desc: "Meluncurkan portal penagihan dan pelanggan online." },
 ];
 
 const contacts = [
-  { icon: Phone,  label: "Phone",   value: "(0341) 123-4567" },
+  { icon: Phone,  label: "Telepon",   value: "(0341) 123-4567" },
   { icon: Mail,   label: "Email",   value: "info@pdambaru.id" },
-  { icon: MapPin, label: "Address", value: "Jl. Sumber Air No. 1, Malang" },
+  { icon: MapPin, label: "Alamat", value: "Jl. Sumber Air No. 1, Malang" },
 ];
 
 const socials = [
@@ -42,11 +42,8 @@ const socials = [
 
 export default function AboutSection() {
   return (
-    <section
-      id="about"
-      style={{ position: "relative", zIndex: 10, padding: "96px 48px" }}
-    >
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+    <section id="about" className="relative z-10 py-24 px-6 md:px-12">
+      <div className="max-w-[1280px] mx-auto">
 
         {/* ── Section Header ── */}
         <motion.div
@@ -54,39 +51,21 @@ export default function AboutSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          style={{ marginBottom: "56px" }}
+          className="mb-14"
         >
-          <p style={{
-            fontSize: "11px", fontWeight: 700,
-            letterSpacing: "0.12em", textTransform: "uppercase",
-            color: "#4ade80", margin: 0, marginBottom: "10px",
-          }}>
-            Get to know us
+          <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#4ade80] m-0 mb-2.5">
+            Kenali kami lebih dekat
           </p>
-          <h2 style={{
-            fontSize: "clamp(32px, 5vw, 48px)",
-            fontWeight: 900, lineHeight: 1.1,
-            color: "#38bdf8", margin: 0, marginBottom: "12px",
-            textShadow: "0 0 24px rgba(56,189,248,0.28)",
-          }}>
-            About Us
+          <h2 className="text-[clamp(32px,5vw,48px)] font-black leading-[1.1] text-[#38bdf8] m-0 mb-3 drop-shadow-[0_0_24px_rgba(56,189,248,0.28)]">
+            Tentang Kami
           </h2>
-          <p style={{
-            fontSize: "15px",
-            color: "rgba(255,255,255,0.45)",
-            margin: 0,
-          }}>
-            Decades of dedication to clean water for all.
+          <p className="text-[15px] text-white/45 m-0">
+            Puluhan tahun dedikasi untuk air bersih bagi semua.
           </p>
         </motion.div>
 
         {/* ── Two Column Layout ── */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "48px",
-          alignItems: "start",
-        }}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
           {/* ── LEFT: History + Timeline ── */}
           <motion.div
@@ -95,93 +74,43 @@ export default function AboutSection() {
             transition={{ duration: 0.65 }}
             viewport={{ once: true }}
           >
-            <h3 style={{
-              fontSize: "18px", fontWeight: 700,
-              color: "#4ade80", margin: 0, marginBottom: "14px",
-            }}>
-              Our History
+            <h3 className="text-lg font-bold text-[#4ade80] m-0 mb-3.5">
+              Sejarah Kami
             </h3>
 
-            <p style={{
-              fontSize: "14px", lineHeight: 1.8,
-              color: "rgba(255,255,255,0.5)",
-              margin: 0, marginBottom: "36px",
-            }}>
-              PDAM Baru was founded with a single mission: ensure every
-              household has access to safe, clean water. Over the decades
-              we've grown from a small local utility into a trusted public
-              service institution serving thousands across the region.
+            <p className="text-sm leading-[1.8] text-white/50 m-0 mb-9">
+              PDAM Baru didirikan dengan satu misi: memastikan setiap
+              rumah tangga memiliki akses ke air bersih dan aman. Selama beberapa dekade
+              kami telah berkembang dari utilitas lokal kecil menjadi institusi layanan publik
+              tepercaya yang melayani ribuan pelanggan di seluruh wilayah.
             </p>
 
             {/* Timeline */}
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <div className="flex flex-col">
               {timeline.map(({ year, title, desc }, i) => (
-                <div
-                  key={year}
-                  style={{
-                    display: "flex",
-                    gap: "18px",
-                    paddingBottom: i < timeline.length - 1 ? "28px" : "0",
-                    position: "relative",
-                  }}
-                >
+                <div key={year} className={`flex gap-4 md:gap-5 relative ${i < timeline.length - 1 ? "pb-7" : ""}`}>
+                  
                   {/* Vertical connector line */}
                   {i < timeline.length - 1 && (
-                    <div style={{
-                      position: "absolute",
-                      left: "19px",
-                      top: "40px",
-                      bottom: 0,
-                      width: "1px",
-                      background: "linear-gradient(180deg, rgba(74,222,128,0.3), rgba(74,222,128,0.05))",
-                    }} />
+                    <div className="absolute left-[19px] top-10 bottom-0 w-[1px] bg-gradient-to-b from-[#4ade80]/30 to-[#4ade80]/5" />
                   )}
 
                   {/* Year dot */}
-                  <div style={{
-                    width: "40px", height: "40px",
-                    borderRadius: "50%",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0,
-                    background: "rgba(74,222,128,0.07)",
-                    border: "1px solid rgba(74,222,128,0.35)",
-                    boxShadow: "0 0 12px rgba(74,222,128,0.1)",
-                    fontSize: "10px", fontWeight: 900,
-                    color: "#4ade80",
-                    letterSpacing: "0.04em",
-                  }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-[#4ade80]/[0.07] border border-[#4ade80]/35 shadow-[0_0_12px_rgba(74,222,128,0.1)] text-[10px] font-black text-[#4ade80] tracking-[0.04em]">
                     {year.slice(2)}
                   </div>
 
                   {/* Content */}
-                  <div style={{ paddingTop: "8px" }}>
-                    <div style={{
-                      display: "flex", alignItems: "center", gap: "10px",
-                      marginBottom: "4px",
-                    }}>
-                      <p style={{
-                        fontSize: "14px", fontWeight: 700,
-                        color: "rgba(255,255,255,0.9)",
-                        margin: 0,
-                      }}>
+                  <div className="pt-2">
+                    <div className="flex flex-wrap items-center gap-2 md:gap-2.5 mb-1">
+                      <p className="text-sm font-bold text-white/90 m-0">
                         {title}
                       </p>
-                      <span style={{
-                        fontSize: "10px", fontWeight: 700,
-                        color: "#4ade80",
-                        background: "rgba(74,222,128,0.08)",
-                        border: "1px solid rgba(74,222,128,0.2)",
-                        padding: "2px 8px", borderRadius: "999px",
-                        letterSpacing: "0.06em",
-                      }}>
+                      <span className="text-[10px] font-bold text-[#4ade80] bg-[#4ade80]/[0.08] border border-[#4ade80]/20 px-2 py-0.5 rounded-full tracking-[0.06em]">
                         {year}
                       </span>
                     </div>
-                    <p style={{
-                      fontSize: "13px", lineHeight: 1.65,
-                      color: "rgba(255,255,255,0.4)",
-                      margin: 0,
-                    }}>
+                    <p className="text-[13px] leading-[1.65] text-white/40 m-0">
                       {desc}
                     </p>
                   </div>
@@ -196,68 +125,33 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.65 }}
             viewport={{ once: true }}
-            style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+            className="flex flex-col gap-6"
           >
 
             {/* Contact card */}
-            <div style={{
-              borderRadius: "20px",
-              border: "1px solid rgba(74,222,128,0.2)",
-              background: "rgba(255,255,255,0.025)",
-              overflow: "hidden",
-              position: "relative",
-            }}>
+            <div className="rounded-[20px] border border-[#4ade80]/20 bg-white/[0.025] overflow-hidden relative">
               {/* Top accent */}
-              <div style={{
-                height: "2px",
-                background: "linear-gradient(90deg, #4ade80, rgba(56,189,248,0.5), transparent)",
-              }} />
+              <div className="h-[2px] bg-gradient-to-r from-[#4ade80] via-[#38bdf8]/50 to-transparent" />
 
-              <div style={{ padding: "8px 0" }}>
+              <div className="py-2">
                 {contacts.map(({ icon: Icon, label, value }, i) => (
                   <div
                     key={label}
-                    style={{
-                      display: "flex", alignItems: "center", gap: "14px",
-                      padding: "14px 24px",
-                      borderBottom: i < contacts.length - 1
-                        ? "1px solid rgba(255,255,255,0.05)"
-                        : "none",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={e =>
-                      ((e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.03)")
-                    }
-                    onMouseLeave={e =>
-                      ((e.currentTarget as HTMLDivElement).style.background = "transparent")
-                    }
+                    className={`flex items-center gap-3.5 px-6 py-3.5 transition-colors duration-200 hover:bg-white/[0.03] ${
+                      i < contacts.length - 1 ? "border-b border-white/5" : ""
+                    }`}
                   >
                     {/* Icon */}
-                    <div style={{
-                      width: "36px", height: "36px",
-                      borderRadius: "10px", flexShrink: 0,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      background: "rgba(56,189,248,0.08)",
-                      border: "1px solid rgba(56,189,248,0.2)",
-                    }}>
-                      <Icon size={15} style={{ color: "#38bdf8" }} />
+                    <div className="w-9 h-9 rounded-xl shrink-0 flex items-center justify-center bg-[#38bdf8]/[0.08] border border-[#38bdf8]/20">
+                      <Icon size={15} className="text-[#38bdf8]" />
                     </div>
 
                     {/* Text */}
                     <div>
-                      <p style={{
-                        fontSize: "10px", fontWeight: 600,
-                        color: "rgba(255,255,255,0.32)",
-                        margin: 0, marginBottom: "3px",
-                        textTransform: "uppercase", letterSpacing: "0.08em",
-                      }}>
+                      <p className="text-[10px] font-semibold text-white/30 m-0 mb-1 uppercase tracking-[0.08em]">
                         {label}
                       </p>
-                      <p style={{
-                        fontSize: "14px", fontWeight: 500,
-                        color: "rgba(255,255,255,0.85)",
-                        margin: 0,
-                      }}>
+                      <p className="text-sm font-medium text-white/85 m-0">
                         {value}
                       </p>
                     </div>
@@ -267,56 +161,19 @@ export default function AboutSection() {
             </div>
 
             {/* Socials card */}
-            <div style={{
-              borderRadius: "20px",
-              border: "1px solid rgba(74,222,128,0.18)",
-              background: "rgba(255,255,255,0.02)",
-              padding: "24px",
-              position: "relative",
-              overflow: "hidden",
-            }}>
+            <div className="rounded-[20px] border border-[#4ade80]/20 bg-white/[0.02] p-6 relative overflow-hidden">
               {/* Top accent */}
-              <div style={{
-                position: "absolute", top: 0, left: "24px", right: "24px",
-                height: "1px",
-                background: "linear-gradient(90deg, rgba(74,222,128,0.4), transparent)",
-              }} />
+              <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-[#4ade80]/40 to-transparent" />
 
-              <h3 style={{
-                fontSize: "13px", fontWeight: 700,
-                color: "#4ade80", margin: 0, marginBottom: "16px",
-                textTransform: "uppercase", letterSpacing: "0.1em",
-              }}>
-                Follow Us
+              <h3 className="text-[13px] font-bold text-[#4ade80] m-0 mb-4 uppercase tracking-[0.1em]">
+                Ikuti Kami
               </h3>
 
-              <div style={{ display: "flex", gap: "12px" }}>
+              <div className="flex flex-col sm:flex-row gap-3">
                 {socials.map(({ icon: Icon, label }) => (
                   <button
                     key={label}
-                    style={{
-                      display: "flex", alignItems: "center", gap: "8px",
-                      padding: "10px 16px", borderRadius: "12px",
-                      border: "1px solid rgba(74,222,128,0.3)",
-                      color: "#4ade80", background: "rgba(74,222,128,0.04)",
-                      fontSize: "12px", fontWeight: 600,
-                      cursor: "pointer", transition: "all 0.25s",
-                      flex: 1, justifyContent: "center",
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLButtonElement;
-                      el.style.background = "rgba(74,222,128,0.1)";
-                      el.style.borderColor = "rgba(74,222,128,0.55)";
-                      el.style.boxShadow = "0 0 14px rgba(74,222,128,0.2)";
-                      el.style.transform = "translateY(-2px)";
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLButtonElement;
-                      el.style.background = "rgba(74,222,128,0.04)";
-                      el.style.borderColor = "rgba(74,222,128,0.3)";
-                      el.style.boxShadow = "none";
-                      el.style.transform = "translateY(0)";
-                    }}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#4ade80]/30 text-[#4ade80] bg-[#4ade80]/[0.04] text-xs font-semibold cursor-pointer transition-all duration-250 hover:bg-[#4ade80]/10 hover:border-[#4ade80]/50 hover:shadow-[0_0_14px_rgba(74,222,128,0.2)] hover:-translate-y-0.5"
                   >
                     <Icon />
                     {label}
@@ -326,46 +183,22 @@ export default function AboutSection() {
             </div>
 
             {/* Office hours card */}
-            <div style={{
-              borderRadius: "20px",
-              border: "1px solid rgba(56,189,248,0.18)",
-              background: "rgba(56,189,248,0.025)",
-              padding: "20px 24px",
-              display: "flex", alignItems: "center", gap: "16px",
-            }}>
-              {/* Pulse indicator */}
-              <div style={{ position: "relative", flexShrink: 0 }}>
-                <div style={{
-                  width: "10px", height: "10px", borderRadius: "50%",
-                  background: "#4ade80",
-                  boxShadow: "0 0 10px #4ade80",
-                  animation: "pulse 2s infinite",
-                }} />
+            <div className="rounded-[20px] border border-[#38bdf8]/20 bg-[#38bdf8]/[0.025] p-5 md:px-6 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex items-center gap-4">
+                {/* Pulse indicator */}
+                <div className="relative shrink-0">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#4ade80] shadow-[0_0_10px_#4ade80] animate-pulse" />
+                </div>
+                <div>
+                  <p className="text-[13px] font-bold text-white/85 m-0 mb-0.5">
+                    Layanan Pelanggan Buka
+                  </p>
+                  <p className="text-xs text-white/40 m-0">
+                    Senin – Sabtu · 08:00 – 17:00 WIB
+                  </p>
+                </div>
               </div>
-              <div>
-                <p style={{
-                  fontSize: "13px", fontWeight: 700,
-                  color: "rgba(255,255,255,0.85)",
-                  margin: 0, marginBottom: "2px",
-                }}>
-                  Customer Service Open
-                </p>
-                <p style={{
-                  fontSize: "12px",
-                  color: "rgba(255,255,255,0.4)",
-                  margin: 0,
-                }}>
-                  Mon – Sat · 08:00 – 17:00 WIB
-                </p>
-              </div>
-              <div style={{
-                marginLeft: "auto",
-                fontSize: "11px", fontWeight: 700,
-                color: "#4ade80",
-                background: "rgba(74,222,128,0.08)",
-                border: "1px solid rgba(74,222,128,0.25)",
-                padding: "4px 12px", borderRadius: "999px",
-              }}>
+              <div className="sm:ml-auto self-start sm:self-auto text-[11px] font-bold text-[#4ade80] bg-[#4ade80]/[0.08] border border-[#4ade80]/25 px-3 py-1 rounded-full">
                 Online
               </div>
             </div>
@@ -373,13 +206,6 @@ export default function AboutSection() {
           </motion.div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.3); }
-        }
-      `}</style>
     </section>
   );
 }

@@ -25,18 +25,18 @@ const XIcon = () => (
 );
 
 const quickLinks = [
-  { label: "Home",         href: "#home" },
-  { label: "Services",     href: "#services" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "About Us",     href: "#about" },
+  { label: "Beranda",         href: "#home" },
+  { label: "Layanan",     href: "#services" },
+  { label: "Testimoni", href: "#testimonials" },
+  { label: "Tentang Kami",     href: "#about" },
 ];
 
 const supportLinks = [
-  { label: "Help Center",      href: "#" },
-  { label: "Service Status",   href: "#" },
-  { label: "Contact Us",       href: "#" },
-  { label: "Terms of Service", href: "#" },
-  { label: "Privacy Policy",   href: "#" },
+  { label: "Pusat Bantuan",      href: "#" },
+  { label: "Status Layanan",   href: "#" },
+  { label: "Hubungi Kami",       href: "#" },
+  { label: "Syarat dan Ketentuan", href: "#" },
+  { label: "Kebijakan Privasi",   href: "#" },
 ];
 
 const contacts = [
@@ -60,41 +60,24 @@ export default function FooterSection() {
   };
 
   return (
-    <footer style={{
-      position: "relative",
-      overflow: "hidden",
-      borderTop: "1px solid rgba(74,222,128,0.1)",
-    }}>
+    <footer className="relative overflow-hidden border-t border-[#4ade80]/10">
       {/* Top accent line */}
-      <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: "1px",
-        background: "linear-gradient(90deg, transparent, #38bdf8, #4ade80, transparent)",
-      }} />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#38bdf8] to-[#4ade80] opacity-50" />
 
       {/* Orbs */}
-      <div style={{
-        position: "absolute", width: "400px", height: "400px", borderRadius: "50%",
-        bottom: "-150px", left: "-100px",
-        background: "rgba(56,189,248,0.07)", filter: "blur(90px)", pointerEvents: "none",
-      }} />
-      <div style={{
-        position: "absolute", width: "300px", height: "300px", borderRadius: "50%",
-        top: "-80px", right: "-80px",
-        background: "rgba(74,222,128,0.05)", filter: "blur(80px)", pointerEvents: "none",
-      }} />
+      <div className="absolute w-[400px] h-[400px] rounded-full bottom-[-150px] left-[-100px] bg-[#38bdf8]/[0.07] blur-[90px] pointer-events-none" />
+      <div className="absolute w-[300px] h-[300px] rounded-full top-[-80px] right-[-80px] bg-[#4ade80]/[0.05] blur-[80px] pointer-events-none" />
 
       {/* Grid overlay */}
-      <div style={{
-        position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.02,
-        backgroundImage: `linear-gradient(#00e5ff 1px,transparent 1px),linear-gradient(90deg,#00e5ff 1px,transparent 1px)`,
-        backgroundSize: "60px 60px",
-      }} />
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.02]"
+        style={{
+          backgroundImage: `linear-gradient(#00e5ff 1px,transparent 1px),linear-gradient(90deg,#00e5ff 1px,transparent 1px)`,
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-      <div style={{
-        position: "relative", zIndex: 10,
-        maxWidth: "1280px", margin: "0 auto",
-        padding: "72px 48px 40px",
-      }}>
+      <div className="relative z-10 max-w-[1280px] mx-auto pt-[72px] pb-10 px-6 md:px-12">
 
         {/* ── Main Grid ── */}
         <motion.div
@@ -102,81 +85,35 @@ export default function FooterSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.4fr 1fr 1fr 1.2fr",
-            gap: "48px",
-            marginBottom: "56px",
-          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-14 lg:gap-[48px]"
         >
 
           {/* ── Col 1: Brand ── */}
-          <div>
+          <div className="lg:col-span-1">
             {/* Logo */}
             <button
               onClick={() => scrollTo("#home")}
-              style={{
-                display: "flex", alignItems: "center", gap: "10px",
-                background: "none", border: "none", cursor: "pointer",
-                padding: 0, marginBottom: "20px",
-              }}
+              className="flex items-center gap-2.5 bg-transparent border-none cursor-pointer p-0 mb-5 group"
             >
-              <div style={{
-                width: "38px", height: "38px", borderRadius: "11px",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: "rgba(56,189,248,0.1)",
-                border: "1px solid rgba(56,189,248,0.25)",
-                boxShadow: "0 0 16px rgba(56,189,248,0.18)",
-              }}>
-                <Droplet size={18} style={{
-                  color: "#38bdf8",
-                  filter: "drop-shadow(0 0 6px rgba(56,189,248,0.8))",
-                }} />
+              <div className="w-[38px] h-[38px] rounded-[11px] flex items-center justify-center bg-[#38bdf8]/10 border border-[#38bdf8]/25 shadow-[0_0_16px_rgba(56,189,248,0.18)] transition-transform group-hover:scale-105">
+                <Droplet size={18} className="text-[#38bdf8] drop-shadow-[0_0_6px_rgba(56,189,248,0.8)]" />
               </div>
-              <span style={{
-                fontSize: "18px", fontWeight: 900,
-                color: "#38bdf8", letterSpacing: "-0.02em",
-                textShadow: "0 0 18px rgba(56,189,248,0.35)",
-              }}>
+              <span className="text-lg font-black text-[#38bdf8] tracking-[-0.02em] drop-shadow-[0_0_18px_rgba(56,189,248,0.35)]">
                 PDAM Baru
               </span>
             </button>
 
-            <p style={{
-              fontSize: "13px", lineHeight: 1.75,
-              color: "rgba(255,255,255,0.4)",
-              maxWidth: "240px", margin: "0 0 24px",
-            }}>
-              Modernizing water management for a sustainable future. Reliable, clean, and accessible water for all.
+            <p className="text-[13px] leading-[1.75] text-white/40 max-w-[240px] m-0 mb-6">
+              Memodernisasi manajemen air untuk masa depan yang berkelanjutan. Air yang andal, bersih, dan mudah diakses untuk semua.
             </p>
 
             {/* Social buttons */}
-            <div style={{ display: "flex", gap: "8px" }}>
+            <div className="flex gap-2">
               {socials.map(({ icon: Icon, label }) => (
                 <button
                   key={label}
                   title={label}
-                  style={{
-                    width: "36px", height: "36px", borderRadius: "10px",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    background: "rgba(74,222,128,0.05)",
-                    border: "1px solid rgba(74,222,128,0.2)",
-                    color: "#4ade80", cursor: "pointer", transition: "all 0.2s",
-                  }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLButtonElement;
-                    el.style.background = "rgba(74,222,128,0.12)";
-                    el.style.borderColor = "rgba(74,222,128,0.45)";
-                    el.style.boxShadow = "0 0 12px rgba(74,222,128,0.2)";
-                    el.style.transform = "translateY(-2px)";
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLButtonElement;
-                    el.style.background = "rgba(74,222,128,0.05)";
-                    el.style.borderColor = "rgba(74,222,128,0.2)";
-                    el.style.boxShadow = "none";
-                    el.style.transform = "translateY(0)";
-                  }}
+                  className="w-9 h-9 rounded-[10px] flex items-center justify-center bg-[#4ade80]/5 border border-[#4ade80]/20 text-[#4ade80] cursor-pointer transition-all duration-200 hover:bg-[#4ade80]/[0.12] hover:border-[#4ade80]/45 hover:shadow-[0_0_12px_rgba(74,222,128,0.2)] hover:-translate-y-0.5"
                 >
                   <Icon />
                 </button>
@@ -186,40 +123,17 @@ export default function FooterSection() {
 
           {/* ── Col 2: Quick Links ── */}
           <div>
-            <h3 style={{
-              fontSize: "11px", fontWeight: 700,
-              color: "#4ade80", textTransform: "uppercase",
-              letterSpacing: "0.12em", margin: "0 0 20px",
-            }}>
-              Explore
+            <h3 className="text-[11px] font-bold text-[#4ade80] uppercase tracking-[0.12em] m-0 mb-5">
+              Jelajahi
             </h3>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
+            <ul className="list-none m-0 p-0 flex flex-col gap-3">
               {quickLinks.map(({ label, href }) => (
                 <li key={label}>
                   <button
                     onClick={() => scrollTo(href)}
-                    style={{
-                      background: "none", border: "none", cursor: "pointer",
-                      padding: 0, fontSize: "13px",
-                      color: "rgba(255,255,255,0.45)",
-                      transition: "all 0.2s", textAlign: "left",
-                      display: "flex", alignItems: "center", gap: "6px",
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLButtonElement;
-                      el.style.color = "#38bdf8";
-                      el.style.transform = "translateX(4px)";
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLButtonElement;
-                      el.style.color = "rgba(255,255,255,0.45)";
-                      el.style.transform = "translateX(0)";
-                    }}
+                    className="bg-transparent border-none cursor-pointer p-0 text-[13px] text-white/45 transition-all duration-200 text-left flex items-center gap-1.5 hover:text-[#38bdf8] hover:translate-x-1"
                   >
-                    <span style={{
-                      width: "4px", height: "4px", borderRadius: "50%",
-                      background: "rgba(56,189,248,0.5)", flexShrink: 0,
-                    }} />
+                    <span className="w-1 h-1 rounded-full bg-[#38bdf8]/50 shrink-0 transition-colors" />
                     {label}
                   </button>
                 </li>
@@ -229,39 +143,17 @@ export default function FooterSection() {
 
           {/* ── Col 3: Support ── */}
           <div>
-            <h3 style={{
-              fontSize: "11px", fontWeight: 700,
-              color: "#4ade80", textTransform: "uppercase",
-              letterSpacing: "0.12em", margin: "0 0 20px",
-            }}>
-              Support
+            <h3 className="text-[11px] font-bold text-[#4ade80] uppercase tracking-[0.12em] m-0 mb-5">
+              Dukungan
             </h3>
-            <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "12px" }}>
+            <ul className="list-none m-0 p-0 flex flex-col gap-3">
               {supportLinks.map(({ label, href }) => (
                 <li key={label}>
                   <Link
                     href={href}
-                    style={{
-                      fontSize: "13px",
-                      color: "rgba(255,255,255,0.45)",
-                      textDecoration: "none", transition: "all 0.2s",
-                      display: "flex", alignItems: "center", gap: "6px",
-                    }}
-                    onMouseEnter={e => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.color = "#38bdf8";
-                      el.style.transform = "translateX(4px)";
-                    }}
-                    onMouseLeave={e => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.color = "rgba(255,255,255,0.45)";
-                      el.style.transform = "translateX(0)";
-                    }}
+                    className="text-[13px] text-white/45 no-underline transition-all duration-200 flex items-center gap-1.5 hover:text-[#38bdf8] hover:translate-x-1"
                   >
-                    <span style={{
-                      width: "4px", height: "4px", borderRadius: "50%",
-                      background: "rgba(56,189,248,0.5)", flexShrink: 0,
-                    }} />
+                    <span className="w-1 h-1 rounded-full bg-[#38bdf8]/50 shrink-0 transition-colors" />
                     {label}
                   </Link>
                 </li>
@@ -271,30 +163,17 @@ export default function FooterSection() {
 
           {/* ── Col 4: Contact ── */}
           <div>
-            <h3 style={{
-              fontSize: "11px", fontWeight: 700,
-              color: "#4ade80", textTransform: "uppercase",
-              letterSpacing: "0.12em", margin: "0 0 20px",
-            }}>
-              Contact
+            <h3 className="text-[11px] font-bold text-[#4ade80] uppercase tracking-[0.12em] m-0 mb-5">
+              Kontak
             </h3>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="flex flex-col gap-3.5">
               {contacts.map(({ icon: Icon, value }) => (
-                <div key={value} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-                  <div style={{
-                    width: "30px", height: "30px", borderRadius: "8px", flexShrink: 0,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    background: "rgba(56,189,248,0.07)",
-                    border: "1px solid rgba(56,189,248,0.18)",
-                    marginTop: "1px",
-                  }}>
-                    <Icon size={13} style={{ color: "#38bdf8" }} />
+                <div key={value} className="flex items-start gap-3">
+                  <div className="w-[30px] h-[30px] rounded-lg shrink-0 flex items-center justify-center bg-[#38bdf8]/[0.07] border border-[#38bdf8]/[0.18] mt-px">
+                    <Icon size={13} className="text-[#38bdf8]" />
                   </div>
-                  <span style={{
-                    fontSize: "13px", lineHeight: 1.6,
-                    color: "rgba(255,255,255,0.45)",
-                  }}>
+                  <span className="text-[13px] leading-[1.6] text-white/45">
                     {value}
                   </span>
                 </div>
@@ -302,29 +181,12 @@ export default function FooterSection() {
             </div>
 
             {/* CTA */}
-            <div style={{ marginTop: "24px" }}>
-              <Link href="/sign-up" style={{ textDecoration: "none" }}>
+            <div className="mt-6">
+              <Link href="/sign-up" className="no-underline inline-block">
                 <button
-                  style={{
-                    padding: "10px 20px", borderRadius: "10px",
-                    background: "#38bdf8", color: "#0a0f1e",
-                    fontSize: "13px", fontWeight: 700,
-                    border: "none", cursor: "pointer",
-                    boxShadow: "0 0 18px rgba(56,189,248,0.35)",
-                    transition: "all 0.2s",
-                  }}
-                  onMouseEnter={e => {
-                    const el = e.currentTarget as HTMLButtonElement;
-                    el.style.boxShadow = "0 0 28px rgba(56,189,248,0.65)";
-                    el.style.transform = "scale(1.04)";
-                  }}
-                  onMouseLeave={e => {
-                    const el = e.currentTarget as HTMLButtonElement;
-                    el.style.boxShadow = "0 0 18px rgba(56,189,248,0.35)";
-                    el.style.transform = "scale(1)";
-                  }}
+                  className="px-5 py-2.5 rounded-[10px] bg-[#38bdf8] text-[#0a0f1e] text-[13px] font-bold border-none cursor-pointer shadow-[0_0_18px_rgba(56,189,248,0.35)] transition-all duration-200 hover:shadow-[0_0_28px_rgba(56,189,248,0.65)] hover:scale-105"
                 >
-                  Get Started →
+                  Mulai Sekarang →
                 </button>
               </Link>
             </div>
@@ -333,11 +195,7 @@ export default function FooterSection() {
         </motion.div>
 
         {/* ── Divider ── */}
-        <div style={{
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(74,222,128,0.15), rgba(56,189,248,0.15), transparent)",
-          marginBottom: "28px",
-        }} />
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-[#4ade80]/15 to-[#38bdf8]/15 mb-7 opacity-50" />
 
         {/* ── Bottom bar ── */}
         <motion.div
@@ -345,50 +203,30 @@ export default function FooterSection() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          style={{
-            display: "flex", justifyContent: "space-between",
-            alignItems: "center", flexWrap: "wrap", gap: "12px",
-          }}
+          className="flex justify-between items-center flex-col sm:flex-row flex-wrap gap-4"
         >
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.25)", margin: 0 }}>
+          <p className="text-xs text-white/25 m-0 text-center sm:text-left">
             © {currentYear}{" "}
-            <span style={{ color: "#38bdf8", fontWeight: 700 }}>PDAM Baru</span>
-            . All rights reserved.
+            <span className="text-[#38bdf8] font-bold">PDAM Baru</span>
+            . Hak cipta dilindungi.
           </p>
 
           {/* Status indicator */}
-          <div style={{
-            display: "flex", alignItems: "center", gap: "8px",
-            padding: "6px 14px", borderRadius: "999px",
-            background: "rgba(74,222,128,0.06)",
-            border: "1px solid rgba(74,222,128,0.18)",
-          }}>
-            <div style={{
-              width: "7px", height: "7px", borderRadius: "50%",
-              background: "#4ade80",
-              boxShadow: "0 0 8px #4ade80",
-              animation: "pulse 2s infinite",
-            }} />
-            <span style={{ fontSize: "11px", fontWeight: 600, color: "#4ade80" }}>
-              All systems operational
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#4ade80]/[0.06] border border-[#4ade80]/[0.18]">
+            <div className="w-[7px] h-[7px] rounded-full bg-[#4ade80] shadow-[0_0_8px_#4ade80] animate-pulse" />
+            <span className="text-[11px] font-semibold text-[#4ade80]">
+              Semua sistem operasional
             </span>
           </div>
 
-          <p style={{ fontSize: "12px", color: "rgba(255,255,255,0.2)", margin: 0 }}>
-            Designed with{" "}
-            <span style={{ color: "#ef4444" }}>♥</span>
-            {" "}for better water systems.
+          <p className="text-xs text-white/20 m-0 text-center sm:text-left">
+            Didesain dengan{" "}
+            <span className="text-[#ef4444]">♥</span>
+            {" "}untuk sistem air yang lebih baik.
           </p>
         </motion.div>
 
       </div>
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-      `}</style>
     </footer>
   );
 }

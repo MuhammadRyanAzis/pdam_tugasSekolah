@@ -43,90 +43,39 @@ export default function Search({ search }: Props) {
   }
 
   return (
-    <div style={{ width: "100%", position: "relative" }}>
+    <div className="w-full relative group">
       {/* Search icon */}
-      <div style={{
-        position: "absolute", left: "16px", top: "50%",
-        transform: "translateY(-50%)",
-        color: keyword ? "#38bdf8" : "rgba(56,189,248,0.45)",
-        display: "flex", alignItems: "center",
-        transition: "color 0.2s", pointerEvents: "none",
-        zIndex: 2,
-      }}>
+      <div 
+        className={`absolute left-4 top-1/2 -translate-y-1/2 flex items-center transition-colors duration-200 pointer-events-none z-10 ${
+          keyword ? "text-[#38bdf8]" : "text-[#38bdf8]/45"
+        }`}
+      >
         <SearchIcon size={18} />
       </div>
 
       <input
         type="text"
         id="search"
-        placeholder="Search service name... (press Enter)"
+        placeholder="Cari nama layanan... (tekan Enter)"
         value={keyword}
         onChange={handleInputChange}
         onKeyUp={handleSearch}
-        style={{
-          width: "100%", padding: "13px 48px 13px 46px",
-          borderRadius: "12px",
-          background: "rgba(255,255,255,0.04)",
-          border: keyword
-            ? "1px solid rgba(56,189,248,0.4)"
-            : "1px solid rgba(74,222,128,0.2)",
-          color: "#ffffff", fontSize: "14px",
-          outline: "none", transition: "all 0.2s",
-          boxSizing: "border-box",
-          boxShadow: keyword ? "0 0 0 3px rgba(56,189,248,0.07)" : "none",
-        }}
-        onFocus={e => {
-          e.currentTarget.style.borderColor = "rgba(56,189,248,0.5)";
-          e.currentTarget.style.boxShadow = "0 0 0 3px rgba(56,189,248,0.08)";
-          e.currentTarget.style.background = "rgba(56,189,248,0.04)";
-        }}
-        onBlur={e => {
-          e.currentTarget.style.borderColor = keyword
-            ? "rgba(56,189,248,0.4)"
-            : "rgba(74,222,128,0.2)";
-          e.currentTarget.style.boxShadow = keyword
-            ? "0 0 0 3px rgba(56,189,248,0.07)"
-            : "none";
-          e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-        }}
+        className={`w-full py-[13px] pr-12 pl-[46px] rounded-xl text-sm text-white outline-none transition-all duration-200 box-border placeholder:text-white/20 focus:border-[#38bdf8]/50 focus:bg-[#38bdf8]/[0.04] focus:shadow-[0_0_0_3px_rgba(56,189,248,0.08)] ${
+          keyword
+            ? "border border-[#38bdf8]/40 bg-[#38bdf8]/[0.04] shadow-[0_0_0_3px_rgba(56,189,248,0.07)]"
+            : "border border-[#4ade80]/20 bg-white/[0.04]"
+        }`}
       />
 
       {/* Clear button */}
       {keyword && (
         <button
           onClick={clearSearch}
-          style={{
-            position: "absolute", right: "12px", top: "50%",
-            transform: "translateY(-50%)",
-            width: "26px", height: "26px", borderRadius: "50%",
-            background: "rgba(255,255,255,0.07)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            color: "rgba(255,255,255,0.45)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer", transition: "all 0.2s",
-            zIndex: 2,
-          }}
-          onMouseEnter={e => {
-            const el = e.currentTarget as HTMLButtonElement;
-            el.style.background = "rgba(239,68,68,0.15)";
-            el.style.borderColor = "rgba(239,68,68,0.3)";
-            el.style.color = "#ef4444";
-          }}
-          onMouseLeave={e => {
-            const el = e.currentTarget as HTMLButtonElement;
-            el.style.background = "rgba(255,255,255,0.07)";
-            el.style.borderColor = "rgba(255,255,255,0.1)";
-            el.style.color = "rgba(255,255,255,0.45)";
-          }}
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-[26px] h-[26px] rounded-full bg-white/[0.07] border border-white/10 text-white/45 flex items-center justify-center cursor-pointer transition-all duration-200 z-10 hover:bg-[#ef4444]/15 hover:border-[#ef4444]/30 hover:text-[#ef4444]"
         >
           <X size={13} />
         </button>
       )}
-
-      <style>{`
-        input::placeholder { color: rgba(255,255,255,0.2); }
-      `}</style>
     </div>
   );
 }
-

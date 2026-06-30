@@ -26,12 +26,11 @@ export default function DropCustomerButton({
         setShowConfirm(false);
         setIsLoading(true);
         try {
-            const url = `${process.env.NEXT_PUBLIC_BASE_URL}/customers/${selectedData}`
+            const url = `/api-proxy/customers/${selectedData}`
             const response = await fetch(url, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
                     "authorization": `Bearer ${await getCookies("token")}`,
                 },
             })
@@ -87,7 +86,7 @@ export default function DropCustomerButton({
                 ) : (
                     <Trash2 size={16} />
                 )}
-                <span>Delete</span>
+                <span>Hapus</span>
             </button>
 
             {/* Confirmation Modal */}

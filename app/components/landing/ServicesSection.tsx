@@ -6,38 +6,26 @@ const services = [
   {
     icon: Droplet,
     color: "#38bdf8",
-    borderColor: "rgba(56,189,248,0.25)",
-    bgColor: "rgba(56,189,248,0.08)",
-    glowColor: "rgba(56,189,248,0.2)",
-    title: "Clean Water Supply",
-    desc: "Reliable daily clean water distribution to every household in the service area.",
+    title: "Pasokan Air Bersih",
+    desc: "Distribusi air bersih harian yang andal ke setiap rumah tangga di area layanan.",
   },
   {
     icon: CreditCard,
     color: "#4ade80",
-    borderColor: "rgba(74,222,128,0.25)",
-    bgColor: "rgba(74,222,128,0.06)",
-    glowColor: "rgba(74,222,128,0.2)",
-    title: "Bill Payment",
-    desc: "Pay your monthly water bill quickly and securely through our online portal.",
+    title: "Pembayaran Tagihan",
+    desc: "Bayar tagihan air bulanan Anda dengan cepat dan aman melalui portal online kami.",
   },
   {
     icon: PlusCircle,
     color: "#38bdf8",
-    borderColor: "rgba(56,189,248,0.25)",
-    bgColor: "rgba(56,189,248,0.08)",
-    glowColor: "rgba(56,189,248,0.2)",
-    title: "New Connection",
-    desc: "Apply for a new water line connection for your home or business easily.",
+    title: "Sambungan Baru",
+    desc: "Ajukan sambungan saluran air baru untuk rumah atau bisnis Anda dengan mudah.",
   },
   {
     icon: MessageCircle,
     color: "#4ade80",
-    borderColor: "rgba(74,222,128,0.25)",
-    bgColor: "rgba(74,222,128,0.06)",
-    glowColor: "rgba(74,222,128,0.2)",
-    title: "Complaint Handling",
-    desc: "Submit issues and track resolution status in real time through your account.",
+    title: "Penanganan Keluhan",
+    desc: "Kirim masalah dan lacak status penyelesaian secara real-time melalui akun Anda.",
   },
 ];
 
@@ -48,15 +36,8 @@ const cardVariants: Variants = {
 
 export default function ServicesSection() {
   return (
-    <section
-      id="services"
-      style={{
-        position: "relative",
-        zIndex: 10,
-        padding: "96px 48px",
-      }}
-    >
-      <div style={{ maxWidth: "1280px", margin: "0 auto" }}>
+    <section id="services" className="relative z-10 py-20 md:py-24 px-6 md:px-12">
+      <div className="max-w-[1280px] mx-auto">
 
         {/* Section Header */}
         <motion.div
@@ -64,31 +45,18 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          style={{ marginBottom: "56px" }}
+          className="mb-12 md:mb-14"
         >
-          <p style={{
-            fontSize: "11px", fontWeight: 700,
-            letterSpacing: "0.12em", textTransform: "uppercase",
-            color: "#4ade80", marginBottom: "10px",
-          }}>
-            What we offer
+          <p className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#4ade80] mb-2.5">
+            Apa yang kami tawarkan
           </p>
 
-          <h2 style={{
-            fontSize: "clamp(32px, 5vw, 48px)",
-            fontWeight: 900, lineHeight: 1.1,
-            color: "#38bdf8", margin: 0, marginBottom: "12px",
-            textShadow: "0 0 24px rgba(56,189,248,0.28)",
-          }}>
-            Our Services
+          <h2 className="text-[clamp(32px,5vw,48px)] font-black leading-[1.1] text-[#38bdf8] m-0 mb-3 drop-shadow-[0_0_24px_rgba(56,189,248,0.28)]">
+            Layanan Kami
           </h2>
 
-          <p style={{
-            fontSize: "15px",
-            color: "rgba(255,255,255,0.45)",
-            margin: 0,
-          }}>
-            Everything you need for clean water management — in one place.
+          <p className="text-sm md:text-[15px] text-white/45 m-0 max-w-lg">
+            Semua yang Anda butuhkan untuk manajemen air bersih — di satu tempat.
           </p>
         </motion.div>
 
@@ -98,88 +66,54 @@ export default function ServicesSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "20px",
-          }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
         >
-          {services.map(({ icon: Icon, color, borderColor, bgColor, glowColor, title, desc }) => (
-            <motion.div
-              key={title}
-              variants={cardVariants}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.transform = "translateY(-6px)";
-                el.style.boxShadow = `0 0 28px ${glowColor}`;
-                el.style.borderColor = color === "#38bdf8"
-                  ? "rgba(56,189,248,0.5)"
-                  : "rgba(74,222,128,0.5)";
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLDivElement;
-                el.style.transform = "translateY(0)";
-                el.style.boxShadow = "none";
-                el.style.borderColor = borderColor;
-              }}
-              style={{
-                position: "relative",
-                borderRadius: "20px",
-                padding: "28px 24px 36px",
-                background: "rgba(255,255,255,0.025)",
-                border: `1px solid ${borderColor}`,
-                cursor: "default",
-                transition: "all 0.3s ease",
-              }}
-            >
-              {/* Icon box */}
-              <div style={{
-                width: "48px", height: "48px",
-                borderRadius: "14px",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                background: bgColor,
-                border: `1px solid ${borderColor}`,
-                marginBottom: "20px",
-              }}>
-                <Icon size={22} style={{ color }} />
-              </div>
+          {services.map(({ icon: Icon, color, title, desc }) => {
+            const isBlue = color === "#38bdf8";
+            
+            return (
+              <motion.div
+                key={title}
+                variants={cardVariants}
+                className={`relative rounded-2xl p-7 pb-9 bg-white/[0.025] border transition-all duration-300 group ${
+                  isBlue 
+                    ? "border-[#38bdf8]/25 hover:border-[#38bdf8]/50 hover:shadow-[0_0_28px_rgba(56,189,248,0.2)]" 
+                    : "border-[#4ade80]/25 hover:border-[#4ade80]/50 hover:shadow-[0_0_28px_rgba(74,222,128,0.2)]"
+                } hover:-translate-y-1.5`}
+              >
+                {/* Icon box */}
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center border mb-5 ${
+                  isBlue 
+                    ? "bg-[#38bdf8]/[0.08] border-[#38bdf8]/25 text-[#38bdf8]" 
+                    : "bg-[#4ade80]/[0.06] border-[#4ade80]/25 text-[#4ade80]"
+                }`}>
+                  <Icon size={22} />
+                </div>
 
-              {/* Title */}
-              <h3 style={{
-                fontSize: "15px", fontWeight: 700,
-                color: "#ffffff", margin: 0, marginBottom: "10px",
-              }}>
-                {title}
-              </h3>
+                {/* Title */}
+                <h3 className="text-[15px] font-bold text-white m-0 mb-2.5">
+                  {title}
+                </h3>
 
-              {/* Description */}
-              <p style={{
-                fontSize: "13px", lineHeight: 1.7,
-                color: "rgba(255,255,255,0.45)",
-                margin: 0,
-              }}>
-                {desc}
-              </p>
+                {/* Description */}
+                <p className="text-[13px] leading-[1.7] text-white/45 m-0">
+                  {desc}
+                </p>
 
-              {/* Arrow indicator */}
-              <div style={{
-                position: "absolute", bottom: "20px", right: "20px",
-                fontSize: "18px", color,
-                opacity: 0.35,
-                transition: "opacity 0.3s",
-              }}>
-                →
-              </div>
+                {/* Arrow indicator */}
+                <div className={`absolute bottom-5 right-5 text-lg opacity-35 transition-opacity group-hover:opacity-100 ${
+                  isBlue ? "text-[#38bdf8]" : "text-[#4ade80]"
+                }`}>
+                  →
+                </div>
 
-              {/* Top accent line */}
-              <div style={{
-                position: "absolute", top: 0, left: "24px", right: "24px",
-                height: "1px",
-                background: `linear-gradient(90deg, ${color}40, transparent)`,
-                borderRadius: "999px",
-              }} />
-            </motion.div>
-          ))}
+                {/* Top accent line */}
+                <div className={`absolute top-0 left-6 right-6 h-[1px] rounded-full ${
+                  isBlue ? "bg-gradient-to-r from-[#38bdf8]/40 to-transparent" : "bg-gradient-to-r from-[#4ade80]/40 to-transparent"
+                }`} />
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* Bottom CTA row */}
@@ -188,29 +122,13 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          style={{
-            marginTop: "48px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "16px",
-          }}
+          className="mt-12 flex items-center justify-center gap-4"
         >
-          <div style={{
-            height: "1px", flex: 1,
-            background: "linear-gradient(90deg, transparent, rgba(74,222,128,0.2))",
-          }} />
-          <p style={{
-            fontSize: "13px",
-            color: "rgba(255,255,255,0.3)",
-            margin: 0, whiteSpace: "nowrap",
-          }}>
-            All services available 24/7 online
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-[#4ade80]/20" />
+          <p className="text-xs md:text-[13px] text-white/30 m-0 whitespace-nowrap text-center">
+            Semua layanan tersedia 24/7 secara online
           </p>
-          <div style={{
-            height: "1px", flex: 1,
-            background: "linear-gradient(90deg, rgba(74,222,128,0.2), transparent)",
-          }} />
+          <div className="h-[1px] flex-1 bg-gradient-to-r from-[#4ade80]/20 to-transparent" />
         </motion.div>
 
       </div>

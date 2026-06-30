@@ -51,11 +51,10 @@ export default function AddCustomer({ services }: any) {
         phone,
       })
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/customers`, {
+      const response = await fetch(`/api-proxy/customers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
           "authorization": `Bearer ${await getCookies("token")}`,
         },
         body: request,
@@ -176,7 +175,7 @@ export default function AddCustomer({ services }: any) {
               <ShieldCheck size={32} style={{ color: "#38bdf8" }} />
             </div>
             <h1 style={{ fontSize: "32px", fontWeight: 900, margin: "0 0 12px", letterSpacing: "-0.02em" }}>
-              Register <span style={{ color: "#38bdf8" }}>New Customer</span>
+              Register <span style={{ color: "#38bdf8" }}>Pelanggan Baru</span>
             </h1>
             <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.4)", margin: 0 }}>
               Complete the profile information to initiate a new service connection.
@@ -299,7 +298,7 @@ export default function AddCustomer({ services }: any) {
                 required rows={3} value={address}
                 onFocus={() => setFocusedField("address")} onBlur={() => setFocusedField(null)}
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="Full residential or property address"
+                placeholder="Alamat rumah atau properti lengkap"
                 style={{
                   ...inputStyle("address"),
                   resize: "none",

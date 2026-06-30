@@ -49,13 +49,11 @@ export default function EditCustomer({ customer, services }: Props) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/customers/${customer.id}`,
+        `/api-proxy/customers/${customer.id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
-            "app-key": process.env.NEXT_PUBLIC_APP_KEY || "",
-            "Authorization": `Bearer ${await getCookies("token")}`
           },
           body: JSON.stringify({
             customer_number: customerNumber,
@@ -184,7 +182,7 @@ export default function EditCustomer({ customer, services }: Props) {
               <Pencil size={32} style={{ color: "#38bdf8" }} />
             </div>
             <h1 style={{ fontSize: "32px", fontWeight: 900, margin: "0 0 12px", letterSpacing: "-0.02em" }}>
-              Edit <span style={{ color: "#38bdf8" }}>Customer Details</span>
+              Edit <span style={{ color: "#38bdf8" }}>Detail Pelanggan</span>
             </h1>
             <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.4)", margin: 0 }}>
               Updating profile for identification ID: <span style={{ color: "#38bdf8", fontWeight: 700 }}>#{customer.customer_number}</span>

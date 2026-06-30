@@ -46,9 +46,8 @@ export default function EditBillForm({ bill, customers }: Props) {
   const handleEditBill = async (e: React.FormEvent) => {
     e.preventDefault(); setIsLoading(true)
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/bills/${bill.id}`, {
+      const response = await fetch(`/api-proxy/bills/${bill.id}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json", "app-key": process.env.NEXT_PUBLIC_APP_KEY || "", "Authorization": `Bearer ${await getCookies("token")}` },
         body: JSON.stringify({ measurement_number: measurementNumber, usage_value: Number(usageValue) }),
       })
       if (!response.ok) {
@@ -91,7 +90,7 @@ export default function EditBillForm({ bill, customers }: Props) {
             {/* Header row */}
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "28px", flexWrap: "wrap", gap: "16px" }}>
               <div>
-                <h1 style={{ fontSize: "26px", fontWeight: 900, color: "#38bdf8", margin: "0 0 4px", textShadow: "0 0 20px rgba(56,189,248,0.3)", letterSpacing: "-0.02em" }}>Edit Bill</h1>
+                <h1 style={{ fontSize: "26px", fontWeight: 900, color: "#38bdf8", margin: "0 0 4px", textShadow: "0 0 20px rgba(56,189,248,0.3)", letterSpacing: "-0.02em" }}>Ubah Tagihan</h1>
                 <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", margin: 0 }}>Modify bill information for the selected period</p>
               </div>
               {/* Period badge */}
@@ -144,7 +143,7 @@ export default function EditBillForm({ bill, customers }: Props) {
                   style={{ flex: 1, padding: "13px", borderRadius: "12px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)", fontSize: "14px", fontWeight: 600, cursor: "pointer", transition: "all 0.2s" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.08)"; (e.currentTarget as HTMLButtonElement).style.color = "#fff" }}
                   onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.04)"; (e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.7)" }}
-                >Cancel</button>
+                >Batal</button>
               </div>
             </form>
           </div>

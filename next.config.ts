@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Rewrites are now handled directly in middleware.ts
 };
 
 export default nextConfig;
