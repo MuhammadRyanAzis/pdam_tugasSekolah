@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
-async function proxyRequest(request: NextRequest, { params }: { params: { path: string[] } }) {
+async function proxyRequest(request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   try {
     const { path } = await params;
     // Use PROXY_TARGET_URL to avoid infinite loops if NEXT_PUBLIC_BASE_URL points to this proxy
