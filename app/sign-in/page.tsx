@@ -60,7 +60,7 @@ export default function SignInPage() {
           }, 2000);
         });
       } else {
-        toast.warning(responseData.message, { containerId: "toastLogin" });
+        toast.warning(responseData?.message || "Login gagal", { containerId: "toastLogin" });
       }
     } catch (error) {
       console.log(error);
@@ -158,14 +158,14 @@ export default function SignInPage() {
               textShadow: "0 0 24px rgba(56,189,248,0.35)",
               letterSpacing: "-0.02em",
             }}>
-              Welcome Back
+              Selamat Datang Kembali
             </h1>
             <p style={{
               fontSize: "14px",
               color: "rgba(255,255,255,0.4)",
               margin: 0,
             }}>
-              Sign in to your PDAM Baru account
+              Masuk ke akun PDAM Baru Anda
             </p>
           </div>
 
@@ -195,7 +195,7 @@ export default function SignInPage() {
                     type="text"
                     value={username}
                     onChange={e => setUsername(e.target.value)}
-                    placeholder="Enter your username"
+                    placeholder="Masukkan username Anda"
                     required
                     style={{
                       width: "100%", padding: "13px 14px 13px 42px",
@@ -242,7 +242,7 @@ export default function SignInPage() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    placeholder="Masukkan kata sandi Anda"
                     required
                     style={{
                       width: "100%", padding: "13px 44px 13px 42px",
@@ -315,7 +315,7 @@ export default function SignInPage() {
                   el.style.transform = "scale(1)";
                 }}
               >
-                {isPending ? "Signing in..." : "Sign In"}
+                {isPending ? "Sedang masuk..." : "Masuk"}
               </button>
 
             </div>
@@ -345,7 +345,7 @@ export default function SignInPage() {
                   ((e.currentTarget as HTMLAnchorElement).style.textShadow = "none")
                 }
               >
-                Register here
+                Daftar di sini
               </Link>
             </p>
           </div>
@@ -395,13 +395,13 @@ export default function SignInPage() {
               color: "#4ade80", margin: 0, marginBottom: "8px",
               textShadow: "0 0 20px rgba(74,222,128,0.4)",
             }}>
-              Login Successful!
+              Berhasil Masuk!
             </h2>
             <p style={{
               fontSize: "14px", color: "rgba(255,255,255,0.45)",
               margin: 0, marginBottom: "24px",
             }}>
-              Welcome back! Redirecting you now...
+              Selamat datang kembali! Sedang mengalihkan...
             </p>
 
             {/* Spinner */}
